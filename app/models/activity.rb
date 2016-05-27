@@ -1,8 +1,8 @@
 class Activity < ActiveRecord::Base
 
-  def self.fetch_user_activities(user)
+  def self.fetch_user_activities(user, params)
     @client = Strava::Api::V3::Client.new(:access_token => user.token)
-    @activities = @client.list_athlete_activities(:per_page => 200)
+    @activities = @client.list_athlete_activities(params)
     @activities.each do |el|
       save_activity(el)
     end

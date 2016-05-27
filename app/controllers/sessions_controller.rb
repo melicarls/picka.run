@@ -19,17 +19,18 @@ class SessionsController < ApplicationController
       p "Newly saved user: ", user
       if user.save
         flash[:success] = "Profile successfully created. Welcome!"
+        user.load_initial_activities
       else
         flash[:error] = "Something went wrong. Your profile was not created."
       end
     else
-      user.last_login = Date.now
+      user.load_new_activities
       user.token = auth_hash[:credentials][:token]
+      user.last_login = Date.now
       user.save
       flash[:success] = "You have been logged in. Welcome back!"
       p "That user was already registered: ", user
     end
-    user.load_initial_activities
   end
 
   def failure
