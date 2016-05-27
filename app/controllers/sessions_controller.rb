@@ -4,8 +4,26 @@ class SessionsController < ApplicationController
 
   def create
     auth_hash = request.env['omniauth.auth']
-    p auth_hash
-    render :text => auth_hash.inspect
+    user = User.find_by(token: auth_hash["token"])
+    p "Is ther already a user? ", user
+    if !user
+      p "Auth hash: ", auth_hash
+      user = User.new
+      user.first_name = auth_hash[:extra][:raw_info][:firstname]
+      user.last_name = auth_hash[:extra][:raw_info][:lastname]
+      user.city = auth_hash[:extra][:raw_info][:city]
+      user.state = auth_hash[:extra][:raw_info][:state]
+      user.image_url = auth_hash[:extra][:raw_info][:profile]
+      user.email = auth_hash[:extra][:raw_info][:email]
+      user.token = auth_hash[:credentials][:token]
+      user.strava_id = auth_hash[:extra][:raw_info][:id]
+      p "Newly saved user: ", user
+      if user.save
+        flash[:success] = "Profile successfully created!"
+      else
+        flash[:error] = "Something went wrong. Your profile was not created."
+      end
+    end
   end
 
   def failure
