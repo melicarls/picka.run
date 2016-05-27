@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527192554) do
+ActiveRecord::Schema.define(version: 20160527234043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,8 +30,10 @@ ActiveRecord::Schema.define(version: 20160527192554) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.integer  "user_id"
+    t.integer  "route_id"
   end
 
+  add_index "activities", ["route_id"], name: "index_activities_on_route_id", using: :btree
   add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
 
   create_table "routes", force: :cascade do |t|
@@ -67,6 +69,7 @@ ActiveRecord::Schema.define(version: 20160527192554) do
     t.datetime "last_login"
   end
 
+  add_foreign_key "activities", "routes"
   add_foreign_key "activities", "users"
   add_foreign_key "routes", "users"
 end

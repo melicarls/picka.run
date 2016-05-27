@@ -11,12 +11,13 @@ class Route < ActiveRecord::Base
       # If it's a match, compare the map points
         # Find the point that is furthest from route's start
         route_farthest = farthest_point(route.map, route.start_location)
+        p "Here's the route's farthest point: ", route_farthest
         # Find the point that is furthest from the activity's start
+        p "Here's the route's farthest point: ", activity_farthest
         activity_farthest = farthest_point(activity.map, activity.start_location)
         if route_farthest == activity_farthest
           p "The activity's farthest point lines up with the route's farthest point"
 
-          
           # If they match, add the activity to the routes and vice versa
 
         end
