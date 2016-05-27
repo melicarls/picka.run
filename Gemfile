@@ -24,7 +24,7 @@ gem 'angular-rails-templates'
 
 gem 'strava-api-v3'
 
-gem 'omniauth'
+gem 'omniauth-strava'
 
 gem 'httparty'
 
