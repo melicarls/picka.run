@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 
   def create
     auth_hash = request.env['omniauth.auth']
-    user = User.find_by(token: auth_hash[:credentials][:token])
+    user = User.find_by(strava_id: auth_hash[:extra][:raw_info][:id])
     p "Is there already a user? ", user
     if !user
       p "Auth hash: ", auth_hash
@@ -24,9 +24,10 @@ class SessionsController < ApplicationController
         flash[:error] = "Something went wrong. Your profile was not created."
       end
     else
+      user.token = auth_hash[:credentials][:token]
+      user.save
       flash[:success] = "You have been logged in. Welcome back!"
-      p "That user was already registered!"
-      p user
+      p "That user was already registered: ", user
     end
   end
 
