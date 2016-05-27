@@ -4,18 +4,18 @@ class SessionsController < ApplicationController
 
   def create
     auth_hash = request.env['omniauth.auth']
-    user = User.find_by(token: auth_hash["token"])
+    user = User.find_by(token: auth_hash[:credentials][:token])
     p "Is ther already a user? ", user
     if !user
       p "Auth hash: ", auth_hash
       user = User.new
+      user.token = auth_hash[:credentials][:token]
       user.first_name = auth_hash[:extra][:raw_info][:firstname]
       user.last_name = auth_hash[:extra][:raw_info][:lastname]
       user.city = auth_hash[:extra][:raw_info][:city]
       user.state = auth_hash[:extra][:raw_info][:state]
       user.image_url = auth_hash[:extra][:raw_info][:profile]
       user.email = auth_hash[:extra][:raw_info][:email]
-      user.token = auth_hash[:credentials][:token]
       user.strava_id = auth_hash[:extra][:raw_info][:id]
       p "Newly saved user: ", user
       if user.save
