@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527051012) do
+ActiveRecord::Schema.define(version: 20160527170413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "date"
+    t.float    "distance"
+    t.integer  "time"
+    t.float    "pace"
+    t.float    "map",                         array: true
+    t.integer  "strava_id"
+    t.float    "start_location",              array: true
+    t.float    "end_location",                array: true
+    t.float    "elevation_gain"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
