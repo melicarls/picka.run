@@ -6,6 +6,7 @@
 
 #Ignore secret keys
 .env
+secrets.yml
 
 # Ignore bundler config.
 /.bundle
