@@ -1,6 +1,4 @@
 class SessionsController < ApplicationController
-  def new
-  end
 
   def create
     auth_hash = request.env['omniauth.auth']
@@ -29,6 +27,7 @@ class SessionsController < ApplicationController
       flash[:success] = "You have been logged in. Welcome back!"
       p "That user was already registered: ", user
     end
+    user.load_initial_activities
   end
 
   def failure
