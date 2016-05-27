@@ -12,4 +12,11 @@ class SessionsController < ApplicationController
     flash[:error] = "Your account could not be authenticated"
     redirect_to :index
   end
+
+  def destroy
+    session[:user_id] = nil
+    flash[:success] = "You have logged out!"
+    redirect_to :index
+  end
+
 end
