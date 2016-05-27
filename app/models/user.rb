@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   # ONLY run for return users to get activities completed between now and the previous visit
   def load_new_activities
     p "loading new activities for user #{id}"
-    Activity.fetch_user_activities(self, :after => self.last_login)
+    Activity.fetch_user_activities(self, :after => self.last_login.to_i)
   end
-  
+
 end

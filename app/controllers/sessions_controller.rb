@@ -3,7 +3,6 @@ class SessionsController < ApplicationController
   def create
     auth_hash = request.env['omniauth.auth']
     user = User.find_by(strava_id: auth_hash[:extra][:raw_info][:id])
-    p "Is there already a user? ", user
     if !user
       user = User.new
       user.token = auth_hash[:credentials][:token]
@@ -14,7 +13,7 @@ class SessionsController < ApplicationController
       user.image_url = auth_hash[:extra][:raw_info][:profile]
       user.email = auth_hash[:extra][:raw_info][:email]
       user.strava_id = auth_hash[:extra][:raw_info][:id]
-      user.last_login = Date.now
+      user.last_login = DateTime.now
       if user.save
         flash[:success] = "Profile successfully created. Welcome!"
         user.load_initial_activities
@@ -24,7 +23,7 @@ class SessionsController < ApplicationController
     else
       user.load_new_activities
       user.token = auth_hash[:credentials][:token]
-      user.last_login = Date.now
+      user.last_login = DateTime.now
       user.save
       flash[:success] = "You have been logged in. Welcome back!"
     end
