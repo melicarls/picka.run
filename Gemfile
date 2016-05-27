@@ -29,6 +29,8 @@ gem 'omniauth-strava'
 
 gem 'httparty'
 
+gem 'polylines'
+
 gem 'dotenv-rails'
 
 # Use ActiveModel has_secure_password
