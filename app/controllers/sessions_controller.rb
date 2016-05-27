@@ -5,7 +5,6 @@ class SessionsController < ApplicationController
     user = User.find_by(strava_id: auth_hash[:extra][:raw_info][:id])
     p "Is there already a user? ", user
     if !user
-      p "Auth hash: ", auth_hash
       user = User.new
       user.token = auth_hash[:credentials][:token]
       user.first_name = auth_hash[:extra][:raw_info][:firstname]
@@ -16,7 +15,6 @@ class SessionsController < ApplicationController
       user.email = auth_hash[:extra][:raw_info][:email]
       user.strava_id = auth_hash[:extra][:raw_info][:id]
       user.last_login = Date.now
-      p "Newly saved user: ", user
       if user.save
         flash[:success] = "Profile successfully created. Welcome!"
         user.load_initial_activities
@@ -29,7 +27,6 @@ class SessionsController < ApplicationController
       user.last_login = Date.now
       user.save
       flash[:success] = "You have been logged in. Welcome back!"
-      p "That user was already registered: ", user
     end
   end
 

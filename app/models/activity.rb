@@ -23,6 +23,8 @@ class Activity < ActiveRecord::Base
       a.elevation_gain=el["total_elevation_gain"]
       if a.save
         p "Activity saved", a
+      else
+        p "Activity couldn't be saved. Something went wrong."
       end
     end
   end
