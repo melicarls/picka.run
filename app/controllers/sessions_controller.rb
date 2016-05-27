@@ -15,6 +15,7 @@ class SessionsController < ApplicationController
       user.image_url = auth_hash[:extra][:raw_info][:profile]
       user.email = auth_hash[:extra][:raw_info][:email]
       user.strava_id = auth_hash[:extra][:raw_info][:id]
+      user.last_login = Date.now
       p "Newly saved user: ", user
       if user.save
         flash[:success] = "Profile successfully created. Welcome!"
@@ -22,6 +23,7 @@ class SessionsController < ApplicationController
         flash[:error] = "Something went wrong. Your profile was not created."
       end
     else
+      user.last_login = Date.now
       user.token = auth_hash[:credentials][:token]
       user.save
       flash[:success] = "You have been logged in. Welcome back!"
