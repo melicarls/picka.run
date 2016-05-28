@@ -58,6 +58,9 @@ class Route < ActiveRecord::Base
     r.user_id = user[:id]
     if r.save
       p "New route created"
+      p "Here's the id from that route", r[:id]
+      activity[:route_id] = r[:id]
+      activity.save
       apply_tags(r)
     else
       p "Something went wrong making that route"
@@ -85,20 +88,29 @@ class Route < ActiveRecord::Base
 
 
   def self.apply_tags(route)
+    p "Going to add some tags"
     if route.elevation_gain > 400
+      p "adding very hilly tag"
       route.tags.push("Very hilly")
     end
     if route.elevation_gain < 400 && route.elevation_gain > 50
+      p "Here's the activity's tags to start with: ", route.tags
+      p "adding hilly tag"
       route.tags.push("Hilly")
+      p "And after adding the tag: ", route.tags
     end
     if route.elevation_gain < 50
+      p "adding flat tag"
       route.tags.push("Flat")
     end
-    if route.start_location[0] != route.end_location[0] && route.start_location[1] != route.end_location[1]
+    if (route.start_location[0] != route.end_location[0]) && (route.start_location[1] != route.end_location[1])
+      p "adding one-way tag"
       route.tags.push("One-way")
     else
+      p "adding round trip tag"
       route.tags.push("Round trip")
     end
+    route.save
   end
 
   # Returns the fartest point from the starting point
@@ -107,18 +119,23 @@ class Route < ActiveRecord::Base
     farthest_pair = nil
     point_array.each do |set|
       distance = getDistanceFromLatLonInKm(set[0], set[1], starting_point[0], starting_point[1])
+      p "This is the distance that is farthest so far", biggest_distance
+      p "This is the distance that is being compared", distance
       if distance > biggest_distance
+        p "Time to reset biggest distance!"
         biggest_distance = distance
         farthest_pair = set
       end
     end
     # Need to return this pair with a fixed number of decimal points
-    five_decimal_points(farthest_pair)
+    four_decimal_points(farthest_pair)
   end
 
-  def self.five_decimal_points(pair)
-    p "Here's the rounded pair: ", [pair[0].round(5), pair[1].round(5)]
-    return [pair[0].round(5), pair[1].round(5)]
+
+# Adjust the rounding to set the precision of the match
+  def self.four_decimal_points(pair)
+    p "Here's the rounded pair: ", [pair[0].round(4), pair[1].round(4)]
+    return [pair[0].round(4), pair[1].round(4)]
   end
 
 #Returns distance between two given sets of coordinates
@@ -131,7 +148,7 @@ class Route < ActiveRecord::Base
     r * c
   end
 
-#Converter
+#Converter form degrees to radians
   def self.deg2rad(deg)
     return deg * (3.141592653589793/180)
   end
