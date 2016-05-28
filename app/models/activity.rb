@@ -21,6 +21,7 @@ class Activity < ActiveRecord::Base
         a.user_id=user.id
         if a.save
           p "Activity saved", a
+          Route.match_to_route(user, a)
         end
       end
     end
