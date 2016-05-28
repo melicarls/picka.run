@@ -10,6 +10,11 @@ function config (  $routeProvider,   $locationProvider  )  {
      controller: 'HomeIndexController',
      controllerAs: 'homeIndexCtrl'
    })
+   .when('/routes', {
+     templateUrl: 'routes/index.html',
+     controller: 'RoutesIndexController',
+     controllerAs: 'routesIndexCtrl'
+   })
    .otherwise({
      redirectTo: '/'
    });
@@ -21,8 +26,42 @@ function config (  $routeProvider,   $locationProvider  )  {
    });
 }
 
+RoutesIndexController.$inject = ['$http'];
+
+function RoutesIndexController($http) {
+  console.log("Routes index controller is connected");
+  var vm = this;
+
+  $http({
+    method: 'GET',
+    url: '/api/routes'
+  }).then(onRoutesIndexSuccess, onRoutesIndexError);
+
+  function onRoutesIndexSuccess(response) {
+    console.log("Here's the response data: ", response.data);
+    vm.routes = response.data;
+  }
+
+  function onRoutesIndexError(error) {
+    console.log("There was an error: ", error);
+  }
+
+    vm.updateRoute = function(route) {
+      $http({
+        method: 'PATCH',
+        url: '/api/routes/' + route.id,
+        data: route
+      }).then(onRoutesUpdateSuccess, onRoutesUpdateError);
+      function onRoutesUpdateSuccess(response) {
+        console.log("Here's the response data: ", response.data);
+      }
+      function onRoutesUpdateError(error) {
+        console.log("There was an error: ", error);
+      }
+    };
+
+}
+
 HomeIndexController.$inject=[];
 function HomeIndexController() {
-  var vm = this;
-  vm.greeting = "what's up?";
 }

@@ -3,6 +3,7 @@ class Api::RoutesController < ApplicationController
 
   # Tighten this up so it only returns a given user's routes
   def index
+    p "Reached routes controller"
     @routes = Route.all.order("last_completed DESC")
     render json: @routes
   end
