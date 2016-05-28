@@ -78,6 +78,7 @@ class Route < ActiveRecord::Base
     # Add the route's id to the activity so it will be called up the next time this function is fun
     p "This is the route's id: ", route[:id]
     activity[:route_id] = route[:id]
+    activity.save
     p "Here's reference key on the activity: ", activity[:route_id]
   end
 
