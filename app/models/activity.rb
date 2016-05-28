@@ -18,8 +18,10 @@ class Activity < ActiveRecord::Base
         a.start_location=el["start_latlng"]
         a.end_location=el["end_latlng"]
         a.elevation_gain=el["total_elevation_gain"]
+        a.user_id=user.id
         if a.save
           p "Activity saved", a
+          Route.match_to_route(user, a)
         end
       end
     end
