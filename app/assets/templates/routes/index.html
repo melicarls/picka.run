@@ -24,10 +24,10 @@
            </div>
            <div class="card-content">
              <ul>
-               <li>Distance: {{route.distance}}</li>
-               <li>Date of Last Run: {{route.last_completed}} </li>
-               <li>Average Time Elapsed: {{route.avg_time}} </li>
-               <li>Average Pace: {{route.avg_pace}}</li>
+               <li>Distance: {{routesIndexCtrl.formatDistance(route.distance)}} miles</li>
+               <li>Date of Last Run: {{routesIndexCtrl.formatDate(route.last_completed)}} </li>
+               <li>Average Time: {{routesIndexCtrl.formatTime(route.avg_time)}} </li>
+               <li>Average Pace: {{routesIndexCtrl.formatPace(route.avg_pace)}}</li>
              </ul>
            </div>
            <div class="card-action">

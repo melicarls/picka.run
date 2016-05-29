@@ -45,13 +45,38 @@ function RoutesIndexController($http) {
   }).then(onRoutesIndexSuccess, onRoutesIndexError);
 
   function onRoutesIndexSuccess(response) {
-    console.log("Here's the response data: ", response.data);
     vm.routes = response.data;
   }
 
   function onRoutesIndexError(error) {
     console.log("There was an error: ", error);
   }
+
+    vm.formatDistance = function(distance) {
+      return +(distance * 0.000621371).toFixed(2);
+    };
+
+    vm.formatDate = function(date) {
+      var d = new Date(date);
+      var year = d.getFullYear();
+      var month = d.getMonth() + 1;
+      var day = d.getDate();
+      return (month + "/" + day + "/" + year);
+    };
+
+    vm.formatTime = function(time) {
+      var hours = parseInt(time / 3600) % 24;
+      var minutes = parseInt(time / 60) % 60;
+      var seconds = parseInt(time % 60);
+      return ((hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds));
+    };
+
+    vm.formatPace = function(pace) {
+      var minutePerMile = 26.8224 / pace;
+      var minutes = (minutePerMile / 1).toFixed(0);
+      var seconds = (((minutePerMile % 1) * 60).toFixed(0));
+      return (minutes + ":" + (seconds  < 10 ? "0" + seconds : seconds));
+    };
 
     vm.updateRoute = function(route) {
       $http({
