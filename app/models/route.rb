@@ -10,10 +10,10 @@ class Route < ActiveRecord::Base
     p "The user has these routes: ", @routes
     if !@routes.empty?
       @routes.each do |route|
-        p "Comparing activity distance: ", (activity.distance * 0.000621371)
-        p "to route distance: ", (route.distance * 0.000621371)
+        p "Comparing activity distance: ", activity.distance
+        p "to route distance: ", route.distance
         # Check distance
-        if (activity.distance * 0.000621371).between?(((route.distance * 0.000621371) - 0.25), ((route.distance * 0.000621371) + 0.25))
+        if (activity.distance).between?((route.distance - 0.25), (route.distance + 0.25))
           p "The activity is within the acceptable distance"
         # If it's a match, compare the map points
           # Find the point that is furthest from route's start
@@ -44,7 +44,7 @@ class Route < ActiveRecord::Base
   # Run this when a route could not be found for an activity
   def self.create_route_from_activity(user, activity)
     r = Route.new
-    r.name = (activity.distance * 0.000621371).round(0).to_s + " mile route"
+    r.name = activity.distance.to_s + " mile route"
     r.last_completed = activity.date
     r.distance = activity.distance
     r.avg_time = activity.time

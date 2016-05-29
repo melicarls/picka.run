@@ -5,7 +5,8 @@
       <h2>{{routesShowCtrl.route.name}}</h2>
     </div>
     <div class="col s1 offset-s5">
-      <i class="fa fa-star-o fa-3x" aria-hidden="true"></i>
+      <i ng-hide="routesShowCtrl.route.favorite" class="fa fa-star-o fa-3x" aria-hidden="true"></i>
+      <i ng-show="routesShowCtrl.route.favorite" class="fa fa-star fa-3x" aria-hidden="true"></i>
     </div>
   </div>
 
@@ -17,7 +18,7 @@
 
   <div class="row">
     <div class="col s12 m6">
-      <h5>Distance: {{routesShowCtrl.formatDistance(routesShowCtrl.route.distance)}} miles</h5>
+      <h5>Distance: {{routesShowCtrl.route.distance}} miles</h5>
       <h5>Average Time Elapsed: {{routesShowCtrl.formatTime(routesShowCtrl.route.avg_time)}}</h5>
       <h5>Average Pace: {{routesShowCtrl.formatPace(routesShowCtrl.route.avg_pace)}} min/mi</h5>
     </div>
