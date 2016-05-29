@@ -1,6 +1,8 @@
 angular.module('pickarun', ['ngRoute', 'templates'])
        .config(config)
-       .controller('HomeIndexController', HomeIndexController);
+       .controller('HomeIndexController', HomeIndexController)
+       .controller('RoutesIndexController', RoutesIndexController)
+       .controller('RoutesShowController', RoutesShowController);
 
 config.$inject = ['$routeProvider', '$locationProvider'];
 function config (  $routeProvider,   $locationProvider  )  {
@@ -9,6 +11,16 @@ function config (  $routeProvider,   $locationProvider  )  {
      templateUrl: 'home.html',
      controller: 'HomeIndexController',
      controllerAs: 'homeIndexCtrl'
+   })
+   .when('/routes', {
+     templateUrl: 'routes/index.html',
+     controller: 'RoutesIndexController',
+     controllerAs: 'routesIndexCtrl'
+   })
+   .when('/routes/:id', {
+     templateUrl: 'routes/show.html',
+     controller: 'RoutesShowController',
+     controllerAs: 'routesShowCtrl'
    })
    .otherwise({
      redirectTo: '/'
@@ -21,8 +33,75 @@ function config (  $routeProvider,   $locationProvider  )  {
    });
 }
 
+RoutesIndexController.$inject = ['$http'];
+
+function RoutesIndexController($http) {
+  console.log("Routes index controller is connected");
+  var vm = this;
+
+  $http({
+    method: 'GET',
+    url: '/api/routes'
+  }).then(onRoutesIndexSuccess, onRoutesIndexError);
+
+  function onRoutesIndexSuccess(response) {
+    vm.routes = response.data;
+  }
+
+  function onRoutesIndexError(error) {
+    console.log("There was an error: ", error);
+  }
+
+    vm.formatDistance = function(distance) {
+      return +(distance * 0.000621371).toFixed(2);
+    };
+
+    vm.formatDate = function(date) {
+      var d = new Date(date);
+      var year = d.getFullYear();
+      var month = d.getMonth() + 1;
+      var day = d.getDate();
+      return (month + "/" + day + "/" + year);
+    };
+
+    vm.formatTime = function(time) {
+      var hours = parseInt(time / 3600) % 24;
+      var minutes = parseInt(time / 60) % 60;
+      var seconds = parseInt(time % 60);
+      return ((hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds));
+    };
+
+    vm.formatPace = function(pace) {
+      var minutePerMile = 26.8224 / pace;
+      var minutes = (minutePerMile / 1).toFixed(0);
+      var seconds = (((minutePerMile % 1) * 60).toFixed(0));
+      return (minutes + ":" + (seconds  < 10 ? "0" + seconds : seconds));
+    };
+
+    vm.updateRoute = function(route) {
+      $http({
+        method: 'PATCH',
+        url: '/api/routes/' + route.id,
+        data: route
+      }).then(onRoutesUpdateSuccess, onRoutesUpdateError);
+      function onRoutesUpdateSuccess(response) {
+        console.log("Here's the response data: ", response.data);
+      }
+      function onRoutesUpdateError(error) {
+        console.log("There was an error: ", error);
+      }
+    };
+
+}
+
+RoutesShowController.$inject = ['$http'];
+
+function RoutesShowController($http) {
+  console.log("Routes show controller is connected");
+  var vm = this;
+
+}
+
 HomeIndexController.$inject=[];
 function HomeIndexController() {
-  var vm = this;
-  vm.greeting = "what's up?";
 }

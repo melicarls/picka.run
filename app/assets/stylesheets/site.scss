@@ -19,3 +19,17 @@
   right: 40px;
   bottom: 20px;
 }
+
+#distance {
+  font-size: 40px;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance:textfield;
+}

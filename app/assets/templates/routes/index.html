@@ -1,0 +1,43 @@
+<div class="container" ng-controller="RoutesIndexController as routesIndexCtrl">
+
+  <div class="row">
+    <h1>Today I want to run</h1>
+     <form class="col s12">
+       <div class="row">
+         <div class="input-field col s1">
+           <input id="distance" type="number" min="0">
+         </div>
+     </form>
+     <h1>  miles.</h1>
+   </div>
+
+   <div id="results">
+     <h3>You recently logged these <span id="searchDistance"></span> mile runs:</h3>
+
+     <!-- Repeat this section for the number of run results -->
+     <div class="row">
+       <div class="col s12 m4" ng-repeat="route in routesIndexCtrl.routes">
+         <div class="card">
+           <div class="card-image">
+             <img src="http://placecorgi.com/200/150"> <!-- Replace this with a map -->
+             <span class="card-title">{{route.name}}</span>
+           </div>
+           <div class="card-content">
+             <ul>
+               <li>Distance: {{routesIndexCtrl.formatDistance(route.distance)}} miles</li>
+               <li>Date of Last Run: {{routesIndexCtrl.formatDate(route.last_completed)}} </li>
+               <li>Average Time: {{routesIndexCtrl.formatTime(route.avg_time)}} </li>
+               <li>Average Pace: {{routesIndexCtrl.formatPace(route.avg_pace)}}</li>
+             </ul>
+           </div>
+           <div class="card-action">
+             <a href="#">View Details</a>
+           </div>
+         </div>
+       </div>
+     </div>
+
+
+   </div>
+
+</div>
