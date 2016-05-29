@@ -69,6 +69,14 @@ function RoutesIndexController($http) {
 
 }
 
+RoutesShowController.$inject = ['$http'];
+
+function RoutesShowController($http) {
+  console.log("Routes show controller is connected");
+  var vm = this;
+
+}
+
 HomeIndexController.$inject=[];
 function HomeIndexController() {
 }

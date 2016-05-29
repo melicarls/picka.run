@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-controller="RoutesIndexController as routesIndexCtrl">
 
   <div class="row">
     <h1>Today I want to run</h1>
@@ -16,18 +16,18 @@
 
      <!-- Repeat this section for the number of run results -->
      <div class="row">
-       <div class="col s12 m4">
+       <div class="col s12 m4" ng-repeat="route in routesIndexCtrl.routes">
          <div class="card">
            <div class="card-image">
              <img src="http://placecorgi.com/200/150"> <!-- Replace this with a map -->
-             <span class="card-title">Run Title Here</span>
+             <span class="card-title">{{route.name}}</span>
            </div>
            <div class="card-content">
              <ul>
-               <li>Distance: </li>
-               <li>Date of Last Run: </li>
-               <li>Average Time Elapsed: </li>
-               <li>Average Pace: </li>
+               <li>Distance: {{route.distance}}</li>
+               <li>Date of Last Run: {{route.last_completed}} </li>
+               <li>Average Time Elapsed: {{route.avg_time}} </li>
+               <li>Average Pace: {{route.avg_pace}}</li>
              </ul>
            </div>
            <div class="card-action">
