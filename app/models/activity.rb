@@ -9,11 +9,11 @@ class Activity < ActiveRecord::Base
       if !Activity.find_by(strava_id: el["id"]) && el["type"] == "Run" && el["map"]["summary_polyline"] != nil
         a = Activity.new
         a.name=el["name"]
-        a.date=Time.parse(el["start_date_local"]) #*convert to dateTime
-        a.distance=el["distance"]
+        a.date=Time.parse(el["start_date_local"])
+        a.distance=meters_to_miles(el["distance"])
         a.time=el["elapsed_time"]
         a.pace=el["average_speed"]
-        a.map=Polylines::Decoder.decode_polyline(el["map"]["summary_polyline"]) #*convert to array of points
+        a.map=Polylines::Decoder.decode_polyline(el["map"]["summary_polyline"])
         a.strava_id=el["id"]
         a.start_location=el["start_latlng"]
         a.end_location=el["end_latlng"]
@@ -25,6 +25,11 @@ class Activity < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def self.meters_to_miles(distance)
+    p "Going to convert distance"
+    (distance * 0.000621371).round(2)
   end
 
 
