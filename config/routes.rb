@@ -7,9 +7,8 @@ Rails.application.routes.draw do
 
   namespace :api,defaults: {format: :json} do
     resources :routes, except: [:new, :create, :edit, :destroy]
-    resources :activities, except: [:new, :create, :edit, :destroy]
+    get '/activities/:route_id', :to => 'activities#index'
   end
-
 
   get '*path', to: 'site#index'
 
