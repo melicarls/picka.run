@@ -112,6 +112,18 @@ function RoutesShowController($http, $routeParams) {
     console.log("There was an error: ", error);
   }
 
+  $http({
+    method: 'GET',
+    url: '/api/activities/'+$routeParams.id
+  }).then(onActivitiesSuccess, onActivitiesError);
+  function onActivitiesSuccess(response) {
+    console.log("Here's the activity data:", response.data);
+    vm.activities = response.data;
+  }
+  function onActivitiesError(error) {
+    console.log("There was an error: ", error);
+  }
+
     vm.formatDistance = function(distance) {
       return +(distance * 0.000621371).toFixed(2);
     };

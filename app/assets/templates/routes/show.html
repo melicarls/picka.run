@@ -37,17 +37,11 @@
       <th>Average Pace</th>
       <th>Activity Name</th>
     </tr>
-    <tr>
-      <td>Blah</td>
-      <td>Blah</td>
-      <td>Blah</td>
-      <td>Blah</td>
-    </tr>
-    <tr>
-      <td>Blah</td>
-      <td>Blah</td>
-      <td>Blah</td>
-      <td>Blah</td>
+    <tr ng-repeat="a in routesShowCtrl.activities | orderBy: '-date'">
+      <td>{{routesShowCtrl.formatDate(a.date)}}</td>
+      <td>{{routesShowCtrl.formatTime(a.time)}}</td>
+      <td>{{routesShowCtrl.formatPace(a.pace)}} min/mi</td>
+      <td><a href="https://www.strava.com/activities/{{a.strava_id}}" target="_blank">{{a.name}}</a></td>
     </tr>
   </table>
 
