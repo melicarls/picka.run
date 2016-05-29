@@ -5,8 +5,8 @@
       <h2>{{routesShowCtrl.route.name}}</h2>
     </div>
     <div class="col s1 offset-s5">
-      <i ng-hide="routesShowCtrl.route.favorite" class="fa fa-star-o fa-3x" aria-hidden="true"></i>
-      <i ng-show="routesShowCtrl.route.favorite" class="fa fa-star fa-3x" aria-hidden="true"></i>
+      <i ng-hide="routesShowCtrl.route.favorite" ng-click="routesShowCtrl.favorite(routesShowCtrl.route)" class="fa fa-star-o fa-3x" aria-hidden="true"></i>
+      <i ng-show="routesShowCtrl.route.favorite" ng-click="routesShowCtrl.unfavorite(routesShowCtrl.route)" class="fa fa-star fa-3x" aria-hidden="true"></i>
     </div>
   </div>
 

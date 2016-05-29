@@ -124,6 +124,36 @@ function RoutesShowController($http, $routeParams) {
     console.log("There was an error: ", error);
   }
 
+    vm.favorite = function(route) {
+      vm.route.favorite=true;
+      $http({
+        method: 'PATCH',
+        url: '/api/routes/'+$routeParams.id,
+        data: vm.route
+      }).then(onFavoriteSuccess, onFavoriteError);
+      function onFavoriteSuccess(response) {
+        console.log("The route has been favorited!");
+      }
+      function onFavoriteError(error) {
+        console.log("Something went wrong favoriting that route");
+      }
+    };
+
+    vm.unfavorite = function(route) {
+      vm.route.favorite=false;
+      $http({
+        method: 'PATCH',
+        url: '/api/routes/'+$routeParams.id,
+        data: vm.route
+      }).then(onFavoriteSuccess, onFavoriteError);
+      function onUnfavoriteSuccess(response) {
+        console.log("The route has been unfavorited!");
+      }
+      function onUnfavoriteError(error) {
+        console.log("Something went wrong unfavoriting that route");
+      }
+    };
+
     vm.formatDistance = function(distance) {
       return +(distance * 0.000621371).toFixed(2);
     };
