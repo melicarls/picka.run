@@ -136,6 +136,7 @@ function RoutesShowController($http, $routeParams) {
       }
       function onFavoriteError(error) {
         console.log("Something went wrong favoriting that route");
+        vm.route.favorite=false;
       }
     };
 
@@ -145,12 +146,29 @@ function RoutesShowController($http, $routeParams) {
         method: 'PATCH',
         url: '/api/routes/'+$routeParams.id,
         data: vm.route
-      }).then(onFavoriteSuccess, onFavoriteError);
+      }).then(onUnfavoriteSuccess, onUnfavoriteError);
       function onUnfavoriteSuccess(response) {
         console.log("The route has been unfavorited!");
       }
       function onUnfavoriteError(error) {
         console.log("Something went wrong unfavoriting that route");
+        vm.route.favorite=true;
+      }
+    };
+
+    vm.rename = function(route) {
+      vm.editing = false;
+      $http({
+        method: 'PATCH',
+        url: '/api/routes/'+$routeParams.id,
+        data: vm.route
+      }).then(onRenameSuccess, onRenameError);
+      function onRenameSuccess(response) {
+        console.log("The route has been renamed!");
+        vm.editing = false;
+      }
+      function onRenameError(error) {
+        console.log("Something went wrong renaming that route");
       }
     };
 
