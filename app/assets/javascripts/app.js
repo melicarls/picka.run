@@ -1,6 +1,8 @@
 angular.module('pickarun', ['ngRoute', 'templates'])
        .config(config)
-       .controller('HomeIndexController', HomeIndexController);
+       .controller('HomeIndexController', HomeIndexController)
+       .controller('RoutesIndexController', RoutesIndexController)
+       .controller('RoutesShowController', RoutesShowController);
 
 config.$inject = ['$routeProvider', '$locationProvider'];
 function config (  $routeProvider,   $locationProvider  )  {
@@ -14,6 +16,11 @@ function config (  $routeProvider,   $locationProvider  )  {
      templateUrl: 'routes/index.html',
      controller: 'RoutesIndexController',
      controllerAs: 'routesIndexCtrl'
+   })
+   .when('/routes/:id', {
+     templateUrl: 'routes/show.html',
+     controller: 'RoutesShowController',
+     controllerAs: 'routesShowCtrl'
    })
    .otherwise({
      redirectTo: '/'
