@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
       user.save
       flash[:success] = "You have been logged in. Welcome back!"
     end
-    redirect_to api_routes_path
+    redirect_to '/routes'
   end
 
   def failure
