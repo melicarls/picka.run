@@ -14,8 +14,10 @@ class Api::RoutesController < ApplicationController
   end
 
   def update
+    p "Hit the update route path"
     @route = Route.find(params[:id])
     @route.update(route_params)
+    @route.favorite = params[:favorite]
     if @route.save
       render json: @route
     else
@@ -27,7 +29,7 @@ class Api::RoutesController < ApplicationController
 
   #Only allow users to edit name or favorite status
   def route_params
-    params.require(:route).permit(:name, :favorite)
+    params.require(:route).permit(:id, :name, :favorite)
   end
 
 end
