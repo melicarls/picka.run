@@ -5,18 +5,18 @@
      <form class="col s12">
        <div class="row">
          <div class="input-field col s1">
-           <input id="distance" type="number" min="0" ng-model="search.distance">
+           <input id="distance" type="number" min="0" ng-model="search">
          </div>
      </form>
      <h1>  miles.</h1>
    </div>
 
-   <div id="results" ng-show="search.distance">
+   <div id="results" ng-show="search">
      <h3>You recently logged these <span id="searchDistance"></span> mile runs:</h3>
 
      <div class="row">
-       <div class="col s12 m4" ng-repeat="route in routesIndexCtrl.routes | filter:search">
-         <div class="card">
+       <div class="col s12 m4" ng-repeat="route in routesIndexCtrl.routes">
+         <div class="card" ng-if="routesIndexCtrl.searchFilter(route.distance, search)">
            <div class="card-image">
              <img src="http://placecorgi.com/200/150"> <!-- Replace this with a map -->
              <span class="card-title">{{route.name}}</span>

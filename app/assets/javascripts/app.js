@@ -52,6 +52,10 @@ function RoutesIndexController($http) {
     console.log("There was an error: ", error);
   }
 
+    vm.searchFilter = function(itemDistance, targetDistance) {
+      return ((itemDistance < targetDistance + 0.5) && (itemDistance > targetDistance - 0.5));
+    };
+
     vm.formatDistance = function(distance) {
       return +(distance * 0.000621371).toFixed(2);
     };
