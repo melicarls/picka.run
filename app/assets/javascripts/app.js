@@ -1,11 +1,11 @@
-angular.module('pickarun', ['ngRoute', 'templates'])
+angular.module('pickarun', ['ngRoute', 'templates', 'uiGmapgoogle-maps'])
        .config(config)
        .controller('HomeIndexController', HomeIndexController)
        .controller('RoutesIndexController', RoutesIndexController)
        .controller('RoutesShowController', RoutesShowController);
 
-config.$inject = ['$routeProvider', '$locationProvider'];
-function config (  $routeProvider,   $locationProvider  )  {
+config.$inject = ['$routeProvider', '$locationProvider', 'uiGmapGoogleMapApiProvider'];
+function config (  $routeProvider,   $locationProvider ,  uiGmapGoogleMapApiProvider )  {
  $routeProvider
    .when('/', {
      templateUrl: 'home.html',
@@ -31,6 +31,11 @@ function config (  $routeProvider,   $locationProvider  )  {
      enabled: true,
      requireBase: false
    });
+
+ uiGmapGoogleMapApiProvider.configure({
+   key: 'AIzaSyBHLett8djBo62dDXj0EjCimF8Rd6E8cxg',
+   libraries: 'weather,geometry,visualization'
+ });
 }
 
 RoutesIndexController.$inject = ['$http'];
