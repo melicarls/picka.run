@@ -8,12 +8,23 @@
       <h5>From {{usersShowCtrl.user.city}}, {{usersShowCtrl.user.state}}</h5>
       <h5>Joined {{usersShowCtrl.formatDate(usersShowCtrl.user.created_at)}}</h5>
 
-      <h5>Distinct routes:</h5>
+      <h5>Distinct routes: {{usersShowCtrl.routeCount}}</h5>
       <h5>Activities completed:</h5>
     </div>
 
-    <div class="col s12 m6">
-      <h4>Your favorite routes:</h4>
+    <div class="col s12 m6 routeList">
+      <h4>Favorite Routes:</h4>
+      <div ng-repeat="route in usersShowCtrl.routes">
+        <div class="card">
+          <div class="card-image">
+            <ui-gmap-google-map center="route.start" zoom="12"  options="usersShowCtrl.options">
+              <ui-gmap-polyline path="route.path" stroke="usersShowCtrl.stroke" visible='true'></ui-gmap-polyline>
+            </ui-gmap-google-map>
+          </div>
+            <span class="card-title">{{route.name}}</span>
+            <a class="pull-right" ng-href="routes/{{route.id}}">More&nbsp;&nbsp;</a>
+          </div>
+        </div>
     </div>
 
 </div>

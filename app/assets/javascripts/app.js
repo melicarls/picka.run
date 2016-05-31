@@ -257,6 +257,12 @@ UsersShowController.$inject = ['$http', '$routeParams'];
 function UsersShowController($http, $routeParams) {
   console.log("Users show controller is connected");
   var vm = this;
+  vm.start = {latitude: 37.8199, longitude: -122.4783};
+  vm.path = [{latitude: 45,longitude: -74}];
+  vm.stroke = {color: '#D94343',weight: 3};
+  vm.options = {
+     styles: mapStyles
+  };
 
   $http({
     method: 'GET',
@@ -283,6 +289,7 @@ function UsersShowController($http, $routeParams) {
     }).then(onRoutesIndexSuccess, onRoutesIndexError);
 
     function onRoutesIndexSuccess(response) {
+      vm.routeCount = response.data.length;
       vm.routes = response.data.filter(function(route) {
         return route.favorite;
       });
