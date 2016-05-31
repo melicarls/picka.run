@@ -2,7 +2,8 @@ angular.module('pickarun', ['ngRoute', 'templates', 'uiGmapgoogle-maps'])
        .config(config)
        .controller('HomeIndexController', HomeIndexController)
        .controller('RoutesIndexController', RoutesIndexController)
-       .controller('RoutesShowController', RoutesShowController);
+       .controller('RoutesShowController', RoutesShowController)
+       .controller('UsersShowController', UsersShowController);
 
 config.$inject = ['$routeProvider', '$locationProvider', 'uiGmapGoogleMapApiProvider'];
 function config (  $routeProvider,   $locationProvider ,  uiGmapGoogleMapApiProvider )  {
@@ -21,6 +22,11 @@ function config (  $routeProvider,   $locationProvider ,  uiGmapGoogleMapApiProv
      templateUrl: 'routes/show.html',
      controller: 'RoutesShowController',
      controllerAs: 'routesShowCtrl'
+   })
+   .when('/users/:id', {
+     templateUrl: 'users/show.html',
+     controller: 'UsersShowController',
+     controllerAs: 'usersShowCtrl'
    })
    .otherwise({
      redirectTo: '/'
@@ -244,6 +250,24 @@ function RoutesShowController($http, $routeParams) {
       return (minutes + ":" + (seconds  < 10 ? "0" + seconds : seconds));
     };
 
+}
+
+UsersShowController.$inject = ['$http', '$routeParams'];
+
+function UsersShowController($http, $routeParams) {
+  console.log("Users show controller is connected");
+  var vm = this;
+
+  $http({
+    method: 'GET',
+    url: '/api/users/'+$routeParams.id
+  }).then(onUsersShowSuccess, onUsersShowError);
+  function onUsersShowSuccess(response) {
+    vm.user = response.data;
+  }
+  function onUsersShowError(error) {
+    console.log("There was an error: ", error);
+  }
 }
 
 HomeIndexController.$inject=[];
