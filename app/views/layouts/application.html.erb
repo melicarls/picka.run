@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="pickarun">
+<head>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- materialize.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+  <!-- font awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <%= stylesheet_link_tag :application, media: :all %>
+  <!-- lodash -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.min.js"></script>
+  <!-- angular -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
+  <!-- ngRoute -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+  <!-- angular-simple-logger -->
+  <script src="http://cdn.rawgit.com/nmccready/angular-simple-logger/0.1.7/dist/angular-simple-logger.js"></script>
+  <!-- angular-google-maps -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.3.3/angular-google-maps.min.js"></script>
+  <!-- materialize.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+  <%= javascript_include_tag :application %>
+  <title>Pickarun</title>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>

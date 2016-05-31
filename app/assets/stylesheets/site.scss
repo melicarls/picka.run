@@ -1,0 +1,72 @@
+// Place all the styles related to the Site controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.nav-wrapper {
+  margin: 0px 20px;
+}
+
+#hero {
+  min-height: 500px;
+  background-image: image-url("splash.jpeg");
+  background-size: cover;
+  background-repeat:no-repeat;
+  background-position: 10% 75%;
+  position: relative;
+}
+
+#hero .btn-large {
+  position: absolute;
+  right: 40px;
+  bottom: 20px;
+}
+
+#distance {
+  font-size: 58px;
+}
+
+// remove scroll from number input
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance:textfield;
+}
+// end remove scroll
+
+.fa {
+  margin-top: 30px;
+}
+
+.angular-google-map-container {
+  height: 200px;
+}
+
+.chip {
+  margin-right: 10px;
+}
+
+// remove logos from maps
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+    box-shadow: none !important;
+}
+// end remove logo
+
+.index, .routeList {
+  min-height: 85vh;
+}
+
+#profPic {
+  border-radius: 100px;
+  width: 150px;
+  margin: 30px auto auto 30px;
+}

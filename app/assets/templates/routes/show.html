@@ -1,0 +1,52 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col s6">
+      <h2 ng-hide="editing">{{routesShowCtrl.route.name}}   <i class="fa fa-pencil" aria-hidden="true" ng-hide="editing" ng-click="editing=true"></i></h2>
+      <input ng-show="editing" ng-model="routesShowCtrl.route.name" type="text" class="form-control input-md"><i class="fa fa-check" ng-show="editing" aria-hidden="true" ng-click="routesShowCtrl.rename(routesShowCtrl.route); editing=false"></i>
+    </div>
+    <div class="col s1 offset-s5">
+      <i ng-hide="routesShowCtrl.route.favorite" ng-click="routesShowCtrl.favorite(routesShowCtrl.route)" class="fa fa-star-o fa-3x" aria-hidden="true"></i>
+      <i ng-show="routesShowCtrl.route.favorite" ng-click="routesShowCtrl.unfavorite(routesShowCtrl.route)" class="fa fa-star fa-3x" aria-hidden="true"></i>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <ui-gmap-google-map center="routesShowCtrl.start" zoom="12" options="routesShowCtrl.options">
+        <ui-gmap-polyline path="routesShowCtrl.path" stroke="routesShowCtrl.stroke" visible='true'></ui-gmap-polyline>
+      </ui-gmap-google-map>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12 m6">
+      <h5>Distance: {{routesShowCtrl.route.distance}} miles</h5>
+      <h5>Average Time Elapsed: {{routesShowCtrl.formatTime(routesShowCtrl.route.avg_time)}}</h5>
+      <h5>Average Pace: {{routesShowCtrl.formatPace(routesShowCtrl.route.avg_pace)}} min/mi</h5>
+    </div>
+    <div class="col s12 m6">
+      <h5>Tags:</h5>
+      <div class="chip" ng-repeat="tag in routesShowCtrl.route.tags">{{tag}}</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h4>Recent Efforts</h4>
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Elapsed Time</th>
+      <th>Average Pace</th>
+      <th>Activity Name</th>
+    </tr>
+    <tr ng-repeat="a in routesShowCtrl.activities | orderBy: '-date'">
+      <td>{{routesShowCtrl.formatDate(a.date)}}</td>
+      <td>{{routesShowCtrl.formatTime(a.time)}}</td>
+      <td>{{routesShowCtrl.formatPace(a.pace)}} min/mi</td>
+      <td><a href="https://www.strava.com/activities/{{a.strava_id}}" target="_blank">{{a.name}}</a></td>
+    </tr>
+  </table>
+
+</div>

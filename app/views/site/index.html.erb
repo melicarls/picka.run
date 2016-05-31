@@ -1,0 +1,32 @@
+<body>
+
+  <header>
+    <nav class="grey">
+      <div class="nav-wrapper">
+        <a href="/routes" class="brand-logo">picka.run</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="/">About</a></li>
+          <% if !current_user %>
+            <li><a href="#">Let's Go!</a></li>
+          <% else %>
+            <li><a href="/users/<%= current_user.id %>"><%= current_user.first_name %></a></li>
+            <li><a href="#">Log out</a></li>
+          <% end %>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div ng-view></div>
+  </main>
+
+  <footer class="page-footer grey">
+    <div class="footer-copyright">
+      <div class="container">
+        Created by <a href="http://www.melicarls.com" target="_blank">Melissa Carlson</a>
+      <a class="grey-text text-lighten-4 right" href="#!">Check out picka.run on GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+</body>

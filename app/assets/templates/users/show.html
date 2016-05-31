@@ -1,0 +1,32 @@
+<br />
+<div class="container">
+
+  <div class="row">
+
+    <div class="col s12 m3">
+      <img src="{{usersShowCtrl.user.image_url}}" id="profPic" />
+      <h4>{{usersShowCtrl.user.first_name}} {{usersShowCtrl.user.last_name}}</h4>
+      <h5>From {{usersShowCtrl.user.city}}, {{usersShowCtrl.user.state}}</h5>
+      <h5>Joined {{usersShowCtrl.formatDate(usersShowCtrl.user.created_at)}}</h5>
+      <h5>Distinct routes: {{usersShowCtrl.routeCount}}</h5>
+      <h5><a href="https://www.strava.com/athletes/{{usersShowCtrl.user.strava_id}}" target="_blank">Strava Profile</a></h5>
+    </div>
+
+    <div class="col s12 m9 routeList">
+      <h4>Favorite Routes:</h4>
+      <div class="row">
+        <div ng-repeat="route in usersShowCtrl.routes" class="col s12 m6">
+          <div class="card">
+            <div class="card-image">
+              <ui-gmap-google-map center="route.start" zoom="12"  options="usersShowCtrl.options">
+                <ui-gmap-polyline path="route.path" stroke="usersShowCtrl.stroke" visible='true'></ui-gmap-polyline>
+              </ui-gmap-google-map>
+            </div>
+            <span class="card-title" ng-bind="route.name"></span>
+            <a class="pull-right" ng-href="/routes/{{route.id}}">More&nbsp;&nbsp;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
