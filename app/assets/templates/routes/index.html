@@ -21,21 +21,21 @@
             </ui-gmap-google-map>
           </div>
           <span class="card-title">{{route.name}}</span>
-        </div>
-        <div class="card-content">
-          <ul>
-            <li>Distance: {{route.distance}} miles</li>
-            <li>Last Run: {{routesIndexCtrl.formatDate(route.last_completed)}} </li>
-            <li>Average Time: {{routesIndexCtrl.formatTime(route.avg_time)}} </li>
-            <li>Average Pace: {{routesIndexCtrl.formatPace(route.avg_pace)}}</li>
-         </ul>
-        </div>
-        <div class="card-action">
-          <a ng-href="routes/{{route.id}}">View Details</a>
+          <div class="card-content">
+            <ul>
+              <li>Distance: {{route.distance}} miles</li>
+              <li>Last Run: {{routesIndexCtrl.formatDate(route.last_completed)}} </li>
+              <li>Average Time: {{routesIndexCtrl.formatTime(route.avg_time)}} </li>
+              <li>Average Pace: {{routesIndexCtrl.formatPace(route.avg_pace)}}</li>
+           </ul>
+          </div>
+          <div class="card-action">
+            <a ng-href="routes/{{route.id}}">View Details</a>
+          </div>
         </div>
       </div>
-      <div class="btn btn-primary" ng-click="routesIndexCtrl.moreResults()">more</div>
     </div>
+    <div class="btn btn-primary" ng-click="routesIndexCtrl.moreResults()">more</div>
   </div>
 
 </div>
