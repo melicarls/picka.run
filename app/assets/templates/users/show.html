@@ -4,11 +4,16 @@
 
     <div class="col s12 m6">
       <img src="{{usersShowCtrl.user.image_url}}" />
-      User info
+      <h4>{{usersShowCtrl.user.first_name}} {{usersShowCtrl.user.last_name}}</h4>
+      <h5>From {{usersShowCtrl.user.city}}, {{usersShowCtrl.user.state}}</h5>
+      <h5>Joined {{usersShowCtrl.formatDate(usersShowCtrl.user.created_at)}}</h5>
+
+      <h5>Distinct routes:</h5>
+      <h5>Activities completed:</h5>
     </div>
 
     <div class="col s12 m6">
-      Favorite routes
+      <h4>Your favorite routes:</h4>
     </div>
 
 </div>

@@ -268,6 +268,47 @@ function UsersShowController($http, $routeParams) {
   function onUsersShowError(error) {
     console.log("There was an error: ", error);
   }
+
+    vm.formatDate = function(date) {
+      var d = new Date(date);
+      var year = d.getFullYear();
+      var month = d.getMonth() + 1;
+      var day = d.getDate();
+      return (month + "/" + day + "/" + year);
+    };
+
+    $http({
+      method: 'GET',
+      url: '/api/routes'
+    }).then(onRoutesIndexSuccess, onRoutesIndexError);
+
+    function onRoutesIndexSuccess(response) {
+      vm.routes = response.data.filter(function(route) {
+        return route.favorite;
+      });
+      addMapInfo(vm.routes);
+    }
+
+    function onRoutesIndexError(error) {
+      console.log("There was an error: ", error);
+    }
+
+      function addMapInfo(routeArr) {
+        routeArr.forEach(function(route) {
+          route.start = {latitude: route.start_location[0], longitude: route.start_location[1]};
+          route.path = formatPolyline(route.map);
+        });
+      }
+
+      function formatPolyline(arr) {
+        results_arr = [];
+        arr.forEach(function(el) {
+          results_arr.push({latitude: el[0], longitude: el[1]});
+          return el;
+        });
+        return results_arr;
+      }
+
 }
 
 HomeIndexController.$inject=[];
