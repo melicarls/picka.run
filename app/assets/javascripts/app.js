@@ -94,7 +94,11 @@ function RoutesIndexController($http) {
     var count = 3;
 
     vm.range = function(routes, targetDistance){
+      if (targetDistance === null) {
+        count = 3;
+      }
       routesArray = [];
+      console.log("Target distance: " + targetDistance);
       angular.forEach(routes, function(route, key) {
         if ((route.distance < targetDistance + 0.5) && (route.distance > targetDistance - 0.5)) {
           routesArray.push(route);
