@@ -27,6 +27,7 @@ class SessionsController < ApplicationController
       user.save
       flash[:success] = "You have been logged in. Welcome back!"
     end
+    @user = current_user
     redirect_to '/routes'
   end
 
@@ -38,7 +39,7 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     flash[:success] = "You have logged out!"
-    redirect_to :index
+    redirect_to '/'
   end
 
 end
