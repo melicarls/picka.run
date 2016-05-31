@@ -2,7 +2,8 @@ angular.module('pickarun', ['ngRoute', 'templates', 'uiGmapgoogle-maps'])
        .config(config)
        .controller('HomeIndexController', HomeIndexController)
        .controller('RoutesIndexController', RoutesIndexController)
-       .controller('RoutesShowController', RoutesShowController);
+       .controller('RoutesShowController', RoutesShowController)
+       .controller('UsersShowController', UsersShowController);
 
 config.$inject = ['$routeProvider', '$locationProvider', 'uiGmapGoogleMapApiProvider'];
 function config (  $routeProvider,   $locationProvider ,  uiGmapGoogleMapApiProvider )  {
@@ -21,6 +22,11 @@ function config (  $routeProvider,   $locationProvider ,  uiGmapGoogleMapApiProv
      templateUrl: 'routes/show.html',
      controller: 'RoutesShowController',
      controllerAs: 'routesShowCtrl'
+   })
+   .when('/users/:id', {
+     templateUrl: 'users/show.html',
+     controller: 'UsersShowController',
+     controllerAs: 'usersShowCtrl'
    })
    .otherwise({
      redirectTo: '/'
@@ -243,6 +249,72 @@ function RoutesShowController($http, $routeParams) {
       var seconds = (((minutePerMile % 1) * 60).toFixed(0));
       return (minutes + ":" + (seconds  < 10 ? "0" + seconds : seconds));
     };
+
+}
+
+UsersShowController.$inject = ['$http', '$routeParams'];
+
+function UsersShowController($http, $routeParams) {
+  console.log("Users show controller is connected");
+  var vm = this;
+  vm.start = {latitude: 37.8199, longitude: -122.4783};
+  vm.path = [{latitude: 45,longitude: -74}];
+  vm.stroke = {color: '#D94343',weight: 3};
+  vm.options = {
+     styles: mapStyles
+  };
+
+  $http({
+    method: 'GET',
+    url: '/api/users/'+$routeParams.id
+  }).then(onUsersShowSuccess, onUsersShowError);
+  function onUsersShowSuccess(response) {
+    vm.user = response.data;
+  }
+  function onUsersShowError(error) {
+    console.log("There was an error: ", error);
+  }
+
+    vm.formatDate = function(date) {
+      var d = new Date(date);
+      var year = d.getFullYear();
+      var month = d.getMonth() + 1;
+      var day = d.getDate();
+      return (month + "/" + day + "/" + year);
+    };
+
+    $http({
+      method: 'GET',
+      url: '/api/routes'
+    }).then(onRoutesIndexSuccess, onRoutesIndexError);
+
+    function onRoutesIndexSuccess(response) {
+      vm.routeCount = response.data.length;
+      vm.routes = response.data.filter(function(route) {
+        return route.favorite;
+      });
+      addMapInfo(vm.routes);
+    }
+
+    function onRoutesIndexError(error) {
+      console.log("There was an error: ", error);
+    }
+
+      function addMapInfo(routeArr) {
+        routeArr.forEach(function(route) {
+          route.start = {latitude: route.start_location[0], longitude: route.start_location[1]};
+          route.path = formatPolyline(route.map);
+        });
+      }
+
+      function formatPolyline(arr) {
+        results_arr = [];
+        arr.forEach(function(el) {
+          results_arr.push({latitude: el[0], longitude: el[1]});
+          return el;
+        });
+        return results_arr;
+      }
 
 }
 

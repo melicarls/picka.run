@@ -14,19 +14,4 @@
 //= require jquery_ujs
 //= require angular-rails-templates
 //= require_tree ../templates
-//= require app
-
-
-
-$(document).on('ready', function() {
-
-  console.log('application.js is ready and connected');
-
-  setInterval(function() {
-    $('#searchDistance').text($('#distance').val());
-  }, 100);
-
-
-
-
-});
+//= require_tree .

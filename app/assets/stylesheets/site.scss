@@ -60,3 +60,13 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     box-shadow: none !important;
 }
 // end remove logo
+
+.index, .routeList {
+  min-height: 85vh;
+}
+
+#profPic {
+  border-radius: 100px;
+  width: 150px;
+  margin: 30px auto auto 30px;
+}
