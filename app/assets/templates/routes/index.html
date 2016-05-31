@@ -1,4 +1,4 @@
-<div class="container" ng-controller="RoutesIndexController as routesIndexCtrl">
+<div class="container">
 
   <div class="row">
     <h1>Today I want to run</h1>
@@ -15,7 +15,8 @@
      <h3>You recently logged these <span id="searchDistance"></span> mile runs:</h3>
 
      <div class="row">
-       <div class="col s12 m4" ng-repeat="route in routesIndexCtrl.routes"  ng-if="routesIndexCtrl.searchFilter(route.distance, search)">
+       <!-- <div class="col s12 m4" ng-repeat="route in routesIndexCtrl.routes"  ng-if="routesIndexCtrl.searchFilter(route.distance, search)"> -->
+      <div class="col s12 m4" ng-repeat="route in routesIndexCtrl.range(routesIndexCtrl.routes, search)" >
          <div class="card">
            <div class="card-image">
              <ui-gmap-google-map center="route.start" zoom="12"  options="routesIndexCtrl.options">
@@ -36,6 +37,7 @@
              <a ng-href="routes/{{route.id}}">View Details</a>
            </div>
          </div>
+         <div class="btn btn-primary" ng-click="routesIndexCtrl.moreResults()">more</div>
        </div>
      </div>
 
