@@ -110,19 +110,30 @@ function RoutesShowController($http, $routeParams) {
   var vm = this;
   vm.start = {latitude: 35.78, longitude:-125.46};
   vm.zoom =15;
+  vm.path = [{latitude: 45,longitude: -74}];
+  vm.stroke = {color: '#D94343',weight: 4};
 
   $http({
     method: 'GET',
     url: '/api/routes/'+$routeParams.id
   }).then(onRoutesShowSuccess, onRoutesShowError);
   function onRoutesShowSuccess(response) {
-    console.log("Here's the response data:", response.data);
     vm.route = response.data;
     vm.start = {latitude:vm.route.start_location[0], longitude:vm.route.start_location[1]};
-    vm.zoom = (vm.route.distance * 1.25);
+    vm.zoom = Math.round(vm.route.distance * 1.15);
+    vm.path = formatPolyline(vm.route.map);
   }
   function onRoutesShowError(error) {
     console.log("There was an error: ", error);
+  }
+
+  function formatPolyline(arr) {
+    results_arr = [];
+    arr.forEach(function(el) {
+      results_arr.push({latitude: el[0], longitude: el[1]});
+      return el;
+    });
+    return results_arr;
   }
 
   $http({
@@ -130,7 +141,6 @@ function RoutesShowController($http, $routeParams) {
     url: '/api/activities/'+$routeParams.id
   }).then(onActivitiesSuccess, onActivitiesError);
   function onActivitiesSuccess(response) {
-    console.log("Here's the activity data:", response.data);
     vm.activities = response.data;
   }
   function onActivitiesError(error) {
