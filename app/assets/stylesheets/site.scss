@@ -20,8 +20,15 @@
   bottom: 20px;
 }
 
+.searchHelp {
+  display: inline;
+}
+
 #distance {
   font-size: 58px;
+  width: 80px;
+  display: inline;
+  text-align: center;
 }
 
 // remove scroll from number input

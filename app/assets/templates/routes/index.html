@@ -1,14 +1,14 @@
 <div class="container index">
 
   <div class="row">
-    <h1>Today I want to run</h1>
      <form class="col s12">
        <div class="row">
-         <div class="input-field col s1">
+         <div class="input-field">
+           <h1 class="searchHelp">Today, I want to run&nbsp;&nbsp;</h1>
            <input id="distance" type="number" min="0" ng-model="search">
+           <h1 class="searchHelp">&nbsp;&nbsp;miles.</h1>
          </div>
      </form>
-     <h1>  miles.</h1>
    </div>
 
    <div id="results" ng-show="search">
