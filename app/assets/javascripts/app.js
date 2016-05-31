@@ -108,6 +108,8 @@ RoutesShowController.$inject = ['$http', '$routeParams'];
 function RoutesShowController($http, $routeParams) {
   console.log("Routes show controller is connected");
   var vm = this;
+  vm.start = {latitude: 35.78, longitude:-125.46};
+  vm.zoom =15;
 
   $http({
     method: 'GET',
@@ -116,6 +118,8 @@ function RoutesShowController($http, $routeParams) {
   function onRoutesShowSuccess(response) {
     console.log("Here's the response data:", response.data);
     vm.route = response.data;
+    vm.start = {latitude:vm.route.start_location[0], longitude:vm.route.start_location[1]};
+    vm.zoom = (vm.route.distance * 1.25);
   }
   function onRoutesShowError(error) {
     console.log("There was an error: ", error);
