@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
       user.save
       flash[:success] = "You have been logged in. Welcome back!"
     end
-    @user = current_user
+    session[:user_id] = user.id
     redirect_to '/routes'
   end
 

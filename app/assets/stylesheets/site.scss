@@ -60,3 +60,7 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     box-shadow: none !important;
 }
 // end remove logo
+
+.index {
+  min-height: 80vh;
+}
