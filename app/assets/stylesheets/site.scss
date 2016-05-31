@@ -24,6 +24,7 @@
   font-size: 58px;
 }
 
+// remove scroll from number input
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -33,6 +34,7 @@ input[type=number]::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance:textfield;
 }
+// end remove scroll
 
 .fa {
   margin-top: 30px;
@@ -45,3 +47,16 @@ input[type=number] {
 .chip {
   margin-right: 10px;
 }
+
+// remove logos from maps
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+    box-shadow: none !important;
+}
+// end remove logo

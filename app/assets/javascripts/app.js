@@ -44,9 +44,11 @@ function RoutesIndexController($http) {
   console.log("Routes index controller is connected");
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
-  vm.zoom =12;
   vm.path = [{latitude: 45,longitude: -74}];
   vm.stroke = {color: '#D94343',weight: 3};
+  vm.options = {
+     styles: mapStyles
+  };
 
   $http({
     method: 'GET',
@@ -130,10 +132,11 @@ function RoutesShowController($http, $routeParams) {
   console.log("Routes show controller is connected");
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
-  vm.zoom =15;
   vm.path = [{latitude: 45,longitude: -74}];
   vm.stroke = {color: '#D94343',weight: 4};
-
+  vm.options = {
+     styles: mapStyles
+  };
   $http({
     method: 'GET',
     url: '/api/routes/'+$routeParams.id
@@ -141,7 +144,6 @@ function RoutesShowController($http, $routeParams) {
   function onRoutesShowSuccess(response) {
     vm.route = response.data;
     vm.start = {latitude:vm.route.start_location[0], longitude:vm.route.start_location[1]};
-    vm.zoom = Math.round(vm.route.distance * 1.15);
     vm.path = formatPolyline(vm.route.map);
   }
   function onRoutesShowError(error) {
@@ -247,3 +249,189 @@ function RoutesShowController($http, $routeParams) {
 HomeIndexController.$inject=[];
 function HomeIndexController() {
 }
+
+var mapStyles=[
+  {
+        "featureType": "all",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            },
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.attraction",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.business",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.government",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#dfdcd5"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.medical",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#dfdcd5"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#bad294"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.place_of_worship",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.school",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.sports_complex",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#fbfbfb"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#a5d7e0"
+            }
+        ]
+    }
+];
