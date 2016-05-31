@@ -1,11 +1,11 @@
-angular.module('pickarun', ['ngRoute', 'templates'])
+angular.module('pickarun', ['ngRoute', 'templates', 'uiGmapgoogle-maps'])
        .config(config)
        .controller('HomeIndexController', HomeIndexController)
        .controller('RoutesIndexController', RoutesIndexController)
        .controller('RoutesShowController', RoutesShowController);
 
-config.$inject = ['$routeProvider', '$locationProvider'];
-function config (  $routeProvider,   $locationProvider  )  {
+config.$inject = ['$routeProvider', '$locationProvider', 'uiGmapGoogleMapApiProvider'];
+function config (  $routeProvider,   $locationProvider ,  uiGmapGoogleMapApiProvider )  {
  $routeProvider
    .when('/', {
      templateUrl: 'home.html',
@@ -31,6 +31,11 @@ function config (  $routeProvider,   $locationProvider  )  {
      enabled: true,
      requireBase: false
    });
+
+ uiGmapGoogleMapApiProvider.configure({
+   key: 'AIzaSyBHLett8djBo62dDXj0EjCimF8Rd6E8cxg',
+   libraries: 'weather,geometry,visualization'
+ });
 }
 
 RoutesIndexController.$inject = ['$http'];
@@ -38,6 +43,12 @@ RoutesIndexController.$inject = ['$http'];
 function RoutesIndexController($http) {
   console.log("Routes index controller is connected");
   var vm = this;
+  vm.start = {latitude: 37.8199, longitude: -122.4783};
+  vm.path = [{latitude: 45,longitude: -74}];
+  vm.stroke = {color: '#D94343',weight: 3};
+  vm.options = {
+     styles: mapStyles
+  };
 
   $http({
     method: 'GET',
@@ -46,11 +57,28 @@ function RoutesIndexController($http) {
 
   function onRoutesIndexSuccess(response) {
     vm.routes = response.data;
+    addMapInfo(vm.routes);
   }
 
   function onRoutesIndexError(error) {
     console.log("There was an error: ", error);
   }
+
+    function addMapInfo(routeArr) {
+      routeArr.forEach(function(route) {
+        route.start = {latitude: route.start_location[0], longitude: route.start_location[1]};
+        route.path = formatPolyline(route.map);
+      });
+    }
+
+    function formatPolyline(arr) {
+      results_arr = [];
+      arr.forEach(function(el) {
+        results_arr.push({latitude: el[0], longitude: el[1]});
+        return el;
+      });
+      return results_arr;
+    }
 
     vm.searchFilter = function(itemDistance, targetDistance) {
       return ((itemDistance < targetDistance + 0.5) && (itemDistance > targetDistance - 0.5));
@@ -103,17 +131,32 @@ RoutesShowController.$inject = ['$http', '$routeParams'];
 function RoutesShowController($http, $routeParams) {
   console.log("Routes show controller is connected");
   var vm = this;
-
+  vm.start = {latitude: 37.8199, longitude: -122.4783};
+  vm.path = [{latitude: 45,longitude: -74}];
+  vm.stroke = {color: '#D94343',weight: 4};
+  vm.options = {
+     styles: mapStyles
+  };
   $http({
     method: 'GET',
     url: '/api/routes/'+$routeParams.id
   }).then(onRoutesShowSuccess, onRoutesShowError);
   function onRoutesShowSuccess(response) {
-    console.log("Here's the response data:", response.data);
     vm.route = response.data;
+    vm.start = {latitude:vm.route.start_location[0], longitude:vm.route.start_location[1]};
+    vm.path = formatPolyline(vm.route.map);
   }
   function onRoutesShowError(error) {
     console.log("There was an error: ", error);
+  }
+
+  function formatPolyline(arr) {
+    results_arr = [];
+    arr.forEach(function(el) {
+      results_arr.push({latitude: el[0], longitude: el[1]});
+      return el;
+    });
+    return results_arr;
   }
 
   $http({
@@ -121,7 +164,6 @@ function RoutesShowController($http, $routeParams) {
     url: '/api/activities/'+$routeParams.id
   }).then(onActivitiesSuccess, onActivitiesError);
   function onActivitiesSuccess(response) {
-    console.log("Here's the activity data:", response.data);
     vm.activities = response.data;
   }
   function onActivitiesError(error) {
@@ -207,3 +249,189 @@ function RoutesShowController($http, $routeParams) {
 HomeIndexController.$inject=[];
 function HomeIndexController() {
 }
+
+var mapStyles=[
+  {
+        "featureType": "all",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            },
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.attraction",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.business",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.government",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#dfdcd5"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.medical",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#dfdcd5"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#bad294"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.place_of_worship",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.school",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.sports_complex",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#efebe2"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#fbfbfb"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#a5d7e0"
+            }
+        ]
+    }
+];
