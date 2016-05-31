@@ -39,7 +39,7 @@ function config (  $routeProvider,   $locationProvider ,  uiGmapGoogleMapApiProv
    });
 
  uiGmapGoogleMapApiProvider.configure({
-   key: 'AIzaSyBHLett8djBo62dDXj0EjCimF8Rd6E8cxg',
+   key: 'AIzaSyCvTq_frx21FtTCouMtSGIDKAHButhQd6k',
    libraries: 'weather,geometry,visualization'
  });
 }
@@ -88,6 +88,27 @@ function RoutesIndexController($http) {
 
     vm.searchFilter = function(itemDistance, targetDistance) {
       return ((itemDistance < targetDistance + 0.5) && (itemDistance > targetDistance - 0.5));
+    };
+
+    var routesArray;
+    var count = 3;
+
+    vm.range = function(routes, targetDistance){
+      if (targetDistance === null) {
+        count = 3;
+      }
+      routesArray = [];
+      console.log("Target distance: " + targetDistance);
+      angular.forEach(routes, function(route, key) {
+        if ((route.distance < targetDistance + 0.5) && (route.distance > targetDistance - 0.5)) {
+          routesArray.push(route);
+        }
+      });
+      return routesArray.splice(0, count);
+    };
+
+    vm.moreResults = function() {
+      count = count + 3;
     };
 
     vm.formatDistance = function(distance) {
