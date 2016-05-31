@@ -43,6 +43,10 @@ RoutesIndexController.$inject = ['$http'];
 function RoutesIndexController($http) {
   console.log("Routes index controller is connected");
   var vm = this;
+  vm.start = {latitude: 37.8199, longitude: -122.4783};
+  vm.zoom =12;
+  vm.path = [{latitude: 45,longitude: -74}];
+  vm.stroke = {color: '#D94343',weight: 3};
 
   $http({
     method: 'GET',
@@ -51,11 +55,28 @@ function RoutesIndexController($http) {
 
   function onRoutesIndexSuccess(response) {
     vm.routes = response.data;
+    addMapInfo(vm.routes);
   }
 
   function onRoutesIndexError(error) {
     console.log("There was an error: ", error);
   }
+
+    function addMapInfo(routeArr) {
+      routeArr.forEach(function(route) {
+        route.start = {latitude: route.start_location[0], longitude: route.start_location[1]};
+        route.path = formatPolyline(route.map);
+      });
+    }
+
+    function formatPolyline(arr) {
+      results_arr = [];
+      arr.forEach(function(el) {
+        results_arr.push({latitude: el[0], longitude: el[1]});
+        return el;
+      });
+      return results_arr;
+    }
 
     vm.searchFilter = function(itemDistance, targetDistance) {
       return ((itemDistance < targetDistance + 0.5) && (itemDistance > targetDistance - 0.5));
@@ -108,7 +129,7 @@ RoutesShowController.$inject = ['$http', '$routeParams'];
 function RoutesShowController($http, $routeParams) {
   console.log("Routes show controller is connected");
   var vm = this;
-  vm.start = {latitude: 35.78, longitude:-125.46};
+  vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.zoom =15;
   vm.path = [{latitude: 45,longitude: -74}];
   vm.stroke = {color: '#D94343',weight: 4};
