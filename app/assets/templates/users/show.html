@@ -5,11 +5,11 @@
 
     <div class="col s12 m3">
       <img src="{{usersShowCtrl.user.image_url}}" id="profPic" />
-      <h4>{{usersShowCtrl.user.first_name}} {{usersShowCtrl.user.last_name}}</h4>
-      <h5>From {{usersShowCtrl.user.city}}, {{usersShowCtrl.user.state}}</h5>
-      <h5>Joined {{usersShowCtrl.formatDate(usersShowCtrl.user.created_at)}}</h5>
-      <h5>Distinct routes: {{usersShowCtrl.routeCount}}</h5>
-      <h5><a href="https://www.strava.com/athletes/{{usersShowCtrl.user.strava_id}}" target="_blank">Strava Profile</a></h5>
+      <h4 ng-cloak>{{usersShowCtrl.user.first_name}} {{usersShowCtrl.user.last_name}}</h4>
+      <h5 ng-cloak>From {{usersShowCtrl.user.city}}, {{usersShowCtrl.user.state}}</h5>
+      <h5 ng-cloak>Joined {{usersShowCtrl.formatDate(usersShowCtrl.user.created_at)}}</h5>
+      <h5 ng-cloak>Distinct routes: {{usersShowCtrl.routeCount}}</h5>
+      <h5 ng-cloak><a href="https://www.strava.com/athletes/{{usersShowCtrl.user.strava_id}}" target="_blank">Strava Profile</a></h5>
     </div>
 
     <div class="col s12 m9 routeList">
