@@ -64,3 +64,9 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 .index, .routeList {
   min-height: 85vh;
 }
+
+#profPic {
+  border-radius: 100px;
+  width: 150px;
+  margin: 30px auto auto 30px;
+}
