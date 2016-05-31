@@ -20,8 +20,8 @@
               <ui-gmap-polyline path="route.path" stroke="routesIndexCtrl.stroke" visible='true'></ui-gmap-polyline>
             </ui-gmap-google-map>
           </div>
-          <span class="card-title">{{route.name}}</span>
           <div class="card-content">
+            <span class="card-title">{{route.name}}</span>
             <ul>
               <li>Distance: {{route.distance}} miles</li>
               <li>Last Run: {{routesIndexCtrl.formatDate(route.last_completed)}} </li>
