@@ -95,15 +95,20 @@ function RoutesIndexController($http) {
 
     vm.range = function(routes, targetDistance){
       if (targetDistance === null) {
+        routesArray = [];
         count = 3;
       }
       routesArray = [];
-      console.log("Target distance: " + targetDistance);
       angular.forEach(routes, function(route, key) {
         if ((route.distance < targetDistance + 0.5) && (route.distance > targetDistance - 0.5)) {
           routesArray.push(route);
         }
       });
+      if (routesArray.length > count) {
+        vm.moreAvailable = true;
+      } else {
+        vm.moreAvailable = false;
+      }
       return routesArray.splice(0, count);
     };
 
