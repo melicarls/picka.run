@@ -10,8 +10,9 @@
             <li><a href="#">Let's Go!</a></li>
           <% else %>
             <li><a href="/users/<%= current_user.id %>"><%= current_user.first_name %></a></li>
-            <li><a href="#">Log out</a></li>
+            <li><a href="/logout">Log out</a></li>
           <% end %>
+        </ul>
       </div>
     </nav>
   </header>
