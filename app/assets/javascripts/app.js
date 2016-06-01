@@ -116,9 +116,9 @@ function RoutesIndexController($http) {
       count = count + 3;
     };
 
-    vm.formatDistance = function(distance) {
-      return +(distance * 0.000621371).toFixed(2);
-    };
+    // vm.formatDistance = function(distance) {
+    //   return +(distance * 0.000621371).toFixed(2);
+    // };
 
     vm.formatDate = function(date) {
       var d = new Date(date);
@@ -255,9 +255,9 @@ function RoutesShowController($http, $routeParams) {
       }
     };
 
-    vm.formatDistance = function(distance) {
-      return +(distance * 0.000621371).toFixed(2);
-    };
+    // vm.formatDistance = function(distance) {
+    //   return (distance.toFixed(2));
+    // };
 
     vm.formatDate = function(date) {
       var d = new Date(date);

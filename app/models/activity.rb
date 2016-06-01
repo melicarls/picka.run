@@ -3,9 +3,7 @@ class Activity < ActiveRecord::Base
   def self.fetch_user_activities(user, params)
     @client = Strava::Api::V3::Client.new(:access_token => user.token)
     @activities = @client.list_athlete_activities(params)
-    p "All activities: ", @activities
     @activities.each do |el|
-      p "This is the element", el
       if !Activity.find_by(strava_id: el["id"]) && el["type"] == "Run" && el["map"]["summary_polyline"] != nil
         a = Activity.new
         a.name=el["name"]
@@ -20,7 +18,6 @@ class Activity < ActiveRecord::Base
         a.elevation_gain=el["total_elevation_gain"]
         a.user_id=user.id
         if a.save
-          p "Activity saved", a
           Route.match_to_route(user, a)
         end
       end
@@ -28,7 +25,6 @@ class Activity < ActiveRecord::Base
   end
 
   def self.meters_to_miles(distance)
-    p "Going to convert distance"
     (distance * 0.000621371).round(2)
   end
 
