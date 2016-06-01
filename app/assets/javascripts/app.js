@@ -203,6 +203,20 @@ function RoutesShowController($http, $routeParams) {
     console.log("There was an error: ", error);
   }
 
+    vm.destroy = function(route) {
+      console.log("Clicked destroy!");
+      $http({
+        method: 'DELETE',
+        url: '/api/routes/'+$routeParams.id
+      }).then(onDestroySuccess, onDestroyError);
+      function onDestroySuccess(response) {
+        console.log(response);
+      }
+      function onDestroyError(response) {
+        console.log("Something went wrong deleting that route");
+      }
+    };
+
     vm.favorite = function(route) {
       vm.route.favorite=true;
       $http({
