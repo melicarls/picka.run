@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root 'site#index'
 
-  get '/login', :to => 'sessions#new', :as => :login
   get '/auth/:provider/callback', :to => 'sessions#create'
   get '/auth/failure', :to => 'sessions#failure'
   get '/logout', :to => 'sessions#destroy', :as => :logout
@@ -12,6 +11,6 @@ Rails.application.routes.draw do
     get '/users/:id', :to => 'users#show'
   end
 
-  get '*path', to: 'site#index'
+  # get '*path', to: 'site#index'
 
 end

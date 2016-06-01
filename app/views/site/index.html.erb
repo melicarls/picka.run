@@ -7,11 +7,10 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><%= link_to "About", root_path %></li>
           <% if !current_user %>
-            <li><%= link_to "Let's Go", login_path %></li>
+            <li><%= link_to "Let's Go!", '/auth/strava', method: 'get' %></li>
           <% else %>
-            <li>
-              <a href="/users/<%= current_user.id %>"><%= current_user.first_name %></a></li>
-            <li><%= link_to "Log Out", logout_path %></li>
+            <li><a href="/users/<%= current_user.id %>"><%= current_user.first_name %></a></li>
+            <li><%= link_to "Log Out", logout_path, method: 'get' %></li>
           <% end %>
         </ul>
       </div>
