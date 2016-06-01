@@ -1,5 +1,7 @@
 class Activity < ActiveRecord::Base
 
+  belongs_to :user, :route
+
   def self.fetch_user_activities(user, params)
     @client = Strava::Api::V3::Client.new(:access_token => user.token)
     @activities = @client.list_athlete_activities(params)

@@ -1,5 +1,8 @@
 class Route < ActiveRecord::Base
 
+  has_many :activities
+  belongs_to :user
+
   # Run this for all newly created activities
   def self.match_to_route(user, activity)
     matched = false

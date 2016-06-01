@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  has_many :activities, :routes
+
   # ONLY run for newly created users
   def load_initial_activities
     p "loading initial activities for user #{id}"
