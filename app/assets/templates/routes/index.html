@@ -29,6 +29,9 @@
               <li>Average Time: {{routesIndexCtrl.formatTime(route.avg_time)}} </li>
               <li>Average Pace: {{routesIndexCtrl.formatPace(route.avg_pace)}}</li>
            </ul>
+           <div>
+             <div class="chip" ng-repeat="tag in route.tags">{{tag}}</div>
+           </div>
           </div>
           <div class="card-action">
             <a ng-href="routes/{{route.id}}">View Details</a>
