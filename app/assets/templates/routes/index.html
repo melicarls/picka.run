@@ -1,16 +1,17 @@
 <div class="container index">
 
   <div class="row">
-   <form class="col s12">
+   <form class="col s12" id="searchBox">
        <div class="input-field">
-         <h1 class="searchHelp">Today, I want to run&nbsp;&nbsp;</h1>
+         <h1 class="searchHelp">Today, I want to run&nbsp;</h1>
          <input id="distance" type="number" min="0" ng-model="search">
-         <h1 class="searchHelp">&nbsp;&nbsp;miles.</h1>
+         <h1 class="searchHelp">&nbsp;miles.</h1>
        </div>
      </form>
    </div>
 
   <div id="results" ng-show="search">
+    <div class="divider"></div>
     <h3>You recently logged these <span ng-bind="search"></span> mile runs:</h3>
     <div class="row">
       <div class="col s12 m4" ng-repeat="route in routesIndexCtrl.range(routesIndexCtrl.routes, search)" >
@@ -28,6 +29,9 @@
               <li>Average Time: {{routesIndexCtrl.formatTime(route.avg_time)}} </li>
               <li>Average Pace: {{routesIndexCtrl.formatPace(route.avg_pace)}}</li>
            </ul>
+           <div>
+             <div class="chip" ng-repeat="tag in route.tags">{{tag}}</div>
+           </div>
           </div>
           <div class="card-action">
             <a ng-href="routes/{{route.id}}">View Details</a>

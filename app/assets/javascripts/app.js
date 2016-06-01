@@ -136,10 +136,15 @@ function RoutesIndexController($http) {
     };
 
     vm.formatPace = function(pace) {
-      var minutePerMile = 26.8224 / pace;
-      var minutes = (minutePerMile / 1).toFixed(0);
-      var seconds = (((minutePerMile % 1) * 60).toFixed(0));
-      return (minutes + ":" + (seconds  < 10 ? "0" + seconds : seconds));
+      // convert to mi/hr
+      pace = pace * 2.2369;
+      // convert to min/mi
+      pace = 60/pace;
+      // format
+      var min = Math.floor(pace);
+      var sec = (pace - min) * 60;
+      sec = Math.floor(sec);
+      return(min+":"+(sec  < 10 ? "0" + sec : sec));
     };
 
     vm.updateRoute = function(route) {
@@ -270,11 +275,17 @@ function RoutesShowController($http, $routeParams) {
     };
 
     vm.formatPace = function(pace) {
-      var minutePerMile = 26.8224 / pace;
-      var minutes = (minutePerMile / 1).toFixed(0);
-      var seconds = (((minutePerMile % 1) * 60).toFixed(0));
-      return (minutes + ":" + (seconds  < 10 ? "0" + seconds : seconds));
+      // convert to mi/hr
+      pace = pace * 2.2369;
+      // convert to min/mi
+      pace = 60/pace;
+      // format
+      var min = Math.floor(pace);
+      var sec = (pace - min) * 60;
+      sec = Math.floor(sec);
+      return(min+":"+(sec  < 10 ? "0" + sec : sec));
     };
+
 
 }
 
