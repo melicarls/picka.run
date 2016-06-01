@@ -20,8 +20,16 @@
   bottom: 20px;
 }
 
+.searchHelp {
+  display: inline;
+}
+
 #distance {
   font-size: 58px;
+  width: 85px;
+  height: 60px;
+  display: inline;
+  text-align: center;
 }
 
 // remove scroll from number input
@@ -41,7 +49,11 @@ input[type=number] {
 }
 
 .angular-google-map-container {
-  height: 200px;
+  height: 250px;
+}
+
+.mapWrap .angular-google-map-container {
+  height: 400px;
 }
 
 .chip {
@@ -69,4 +81,29 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
   border-radius: 100px;
   width: 150px;
   margin: 30px auto auto 30px;
+}
+
+.more-link {
+  margin-top: 8px;
+  margin-left: 10px;
+}
+
+#searchBox {
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 20px;
+}
+
+#nameEdit {
+  font-size: 3.5em;
+  min-height: 60px;
+  margin-top: 50px;
+}
+
+#routeTitle {
+  padding-top: 20px;
+}
+
+.fa-pencil {
+  font-size: .5em;
 }

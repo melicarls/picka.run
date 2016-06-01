@@ -39,7 +39,7 @@ function config (  $routeProvider,   $locationProvider ,  uiGmapGoogleMapApiProv
    });
 
  uiGmapGoogleMapApiProvider.configure({
-   key: 'AIzaSyBHLett8djBo62dDXj0EjCimF8Rd6E8cxg',
+   key: 'AIzaSyCvTq_frx21FtTCouMtSGIDKAHButhQd6k',
    libraries: 'weather,geometry,visualization'
  });
 }
@@ -90,6 +90,32 @@ function RoutesIndexController($http) {
       return ((itemDistance < targetDistance + 0.5) && (itemDistance > targetDistance - 0.5));
     };
 
+    var routesArray;
+    var count = 3;
+
+    vm.range = function(routes, targetDistance){
+      if (targetDistance === null) {
+        routesArray = [];
+        count = 3;
+      }
+      routesArray = [];
+      angular.forEach(routes, function(route, key) {
+        if ((route.distance < targetDistance + 0.5) && (route.distance > targetDistance - 0.5)) {
+          routesArray.push(route);
+        }
+      });
+      if (routesArray.length > count) {
+        vm.moreAvailable = true;
+      } else {
+        vm.moreAvailable = false;
+      }
+      return routesArray.splice(0, count);
+    };
+
+    vm.moreResults = function() {
+      count = count + 3;
+    };
+
     vm.formatDistance = function(distance) {
       return +(distance * 0.000621371).toFixed(2);
     };
@@ -110,10 +136,15 @@ function RoutesIndexController($http) {
     };
 
     vm.formatPace = function(pace) {
-      var minutePerMile = 26.8224 / pace;
-      var minutes = (minutePerMile / 1).toFixed(0);
-      var seconds = (((minutePerMile % 1) * 60).toFixed(0));
-      return (minutes + ":" + (seconds  < 10 ? "0" + seconds : seconds));
+      // convert to mi/hr
+      pace = pace * 2.2369;
+      // convert to min/mi
+      pace = 60/pace;
+      // format
+      var min = Math.floor(pace);
+      var sec = (pace - min) * 60;
+      sec = Math.floor(sec);
+      return(min+":"+(sec  < 10 ? "0" + sec : sec));
     };
 
     vm.updateRoute = function(route) {
@@ -244,11 +275,17 @@ function RoutesShowController($http, $routeParams) {
     };
 
     vm.formatPace = function(pace) {
-      var minutePerMile = 26.8224 / pace;
-      var minutes = (minutePerMile / 1).toFixed(0);
-      var seconds = (((minutePerMile % 1) * 60).toFixed(0));
-      return (minutes + ":" + (seconds  < 10 ? "0" + seconds : seconds));
+      // convert to mi/hr
+      pace = pace * 2.2369;
+      // convert to min/mi
+      pace = 60/pace;
+      // format
+      var min = Math.floor(pace);
+      var sec = (pace - min) * 60;
+      sec = Math.floor(sec);
+      return(min+":"+(sec  < 10 ? "0" + sec : sec));
     };
+
 
 }
 

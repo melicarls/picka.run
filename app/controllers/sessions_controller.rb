@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-
+  
   def create
     auth_hash = request.env['omniauth.auth']
     user = User.find_by(strava_id: auth_hash[:extra][:raw_info][:id])
@@ -38,6 +38,8 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    puts "Logged out!"
+    puts "This is the session", session
     flash[:success] = "You have logged out!"
     redirect_to '/'
   end
