@@ -49,7 +49,6 @@ RoutesIndexController.$inject = ['$http'];
 function RoutesIndexController($http) {
   console.log("Routes index controller is connected");
   var vm = this;
-  vm.show = false;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
   vm.stroke = {color: '#D94343',weight: 3};
@@ -65,7 +64,6 @@ function RoutesIndexController($http) {
   function onRoutesIndexSuccess(response) {
     vm.routes = response.data;
     addMapInfo(vm.routes);
-    vm.show = true;
   }
 
   function onRoutesIndexError(error) {
@@ -165,7 +163,6 @@ RoutesShowController.$inject = ['$http', '$routeParams'];
 function RoutesShowController($http, $routeParams) {
   console.log("Routes show controller is connected");
   var vm = this;
-  vm.show = false;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
   vm.stroke = {color: '#D94343',weight: 4};
@@ -180,7 +177,6 @@ function RoutesShowController($http, $routeParams) {
     vm.route = response.data;
     vm.start = {latitude:vm.route.start_location[0], longitude:vm.route.start_location[1]};
     vm.path = formatPolyline(vm.route.map);
-    vm.show = true;
   }
   function onRoutesShowError(error) {
     console.log("There was an error: ", error);
