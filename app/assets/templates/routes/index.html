@@ -17,8 +17,8 @@
       <div class="col s12 m4" ng-repeat="route in routesIndexCtrl.range(routesIndexCtrl.routes, search)" >
         <div class="card">
           <div class="card-image">
-            <ui-gmap-google-map center="route.start" zoom="12"  options="routesIndexCtrl.options">
-              <ui-gmap-polyline path="route.path" stroke="routesIndexCtrl.stroke" visible='true'></ui-gmap-polyline>
+            <ui-gmap-google-map center="route.start" zoom="12"  options="routesIndexCtrl.options"  ng-if="routesIndexCtrl.show">
+              <ui-gmap-polyline path="route.path" stroke="routesIndexCtrl.stroke" visible='true' static="true"></ui-gmap-polyline>
             </ui-gmap-google-map>
           </div>
           <div class="card-content">

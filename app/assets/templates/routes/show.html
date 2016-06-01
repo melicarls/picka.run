@@ -17,8 +17,8 @@
 
   <div class="row">
     <div class="col s12 mapWrap">
-      <ui-gmap-google-map center="routesShowCtrl.start" zoom="12" options="routesShowCtrl.options">
-        <ui-gmap-polyline path="routesShowCtrl.path" stroke="routesShowCtrl.stroke" visible='true'></ui-gmap-polyline>
+      <ui-gmap-google-map center="routesShowCtrl.start" zoom="12" options="routesShowCtrl.options"  ng-if="routesShowCtrl.show">
+        <ui-gmap-polyline path="routesShowCtrl.path" stroke="routesShowCtrl.stroke" visible='true' static="true"></ui-gmap-polyline>
       </ui-gmap-google-map>
     </div>
   </div>
