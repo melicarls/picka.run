@@ -108,14 +108,14 @@ class Route < ActiveRecord::Base
       end
     end
     # Need to return this pair with a fixed number of decimal points
-    four_decimal_points(farthest_pair)
+    three_decimal_points(farthest_pair)
   end
 
 
 # Adjust the rounding to set the precision of the match
-  def self.four_decimal_points(pair)
-    p "Here's the rounded pair: ", [pair[0].round(4), pair[1].round(4)]
-    return [pair[0].round(4), pair[1].round(4)]
+  def self.three_decimal_points(pair)
+    p "Here's the rounded pair: ", [pair[0].round(3), pair[1].round(3)]
+    return [pair[0].round(3), pair[1].round(3)]
   end
 
 #Returns distance between two given sets of coordinates
