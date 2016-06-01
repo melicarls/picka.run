@@ -52,6 +52,10 @@ input[type=number] {
   height: 250px;
 }
 
+.mapWrap .angular-google-map-container {
+  height: 400px;
+}
+
 .chip {
   margin-right: 10px;
 }
@@ -81,10 +85,25 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 
 .more-link {
   margin-top: 8px;
+  margin-left: 10px;
 }
 
 #searchBox {
   text-align: center;
   margin-top: 100px;
   margin-bottom: 20px;
+}
+
+#nameEdit {
+  font-size: 3.5em;
+  min-height: 60px;
+  margin-top: 50px;
+}
+
+#routeTitle {
+  padding-top: 20px;
+}
+
+.fa-pencil {
+  font-size: .5em;
 }

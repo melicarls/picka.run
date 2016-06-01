@@ -2,8 +2,12 @@
 
   <div class="row">
     <div class="col s6">
-      <h2 ng-hide="editing">{{routesShowCtrl.route.name}}   <i class="fa fa-pencil" aria-hidden="true" ng-hide="editing" ng-click="editing=true"></i></h2>
-      <input ng-show="editing" ng-model="routesShowCtrl.route.name" type="text" class="form-control input-md"><i class="fa fa-check" ng-show="editing" aria-hidden="true" ng-click="routesShowCtrl.rename(routesShowCtrl.route); editing=false"></i>
+      <h2 id="routeTitle" ng-hide="editing">{{routesShowCtrl.route.name}}   <i class="fa fa-pencil" aria-hidden="true" ng-hide="editing" ng-click="editing=true"></i></h2>
+      <div class="editForm">
+        <form ng-submit="routesShowCtrl.rename(routesShowCtrl.route); editing=false">
+          <input ng-show="editing" id="nameEdit" ng-model="routesShowCtrl.route.name" type="text" class="form-control input-md">
+        </form>
+      </div>
     </div>
     <div class="col s1 offset-s5">
       <i ng-hide="routesShowCtrl.route.favorite" ng-click="routesShowCtrl.favorite(routesShowCtrl.route)" class="fa fa-star-o fa-3x" aria-hidden="true"></i>
@@ -12,7 +16,7 @@
   </div>
 
   <div class="row">
-    <div class="col s12">
+    <div class="col s12 mapWrap">
       <ui-gmap-google-map center="routesShowCtrl.start" zoom="12" options="routesShowCtrl.options">
         <ui-gmap-polyline path="routesShowCtrl.path" stroke="routesShowCtrl.stroke" visible='true'></ui-gmap-polyline>
       </ui-gmap-google-map>
