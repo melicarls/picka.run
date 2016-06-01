@@ -48,7 +48,7 @@ input[type=number] {
 }
 
 .angular-google-map-container {
-  height: 200px;
+  height: 250px;
 }
 
 .chip {
@@ -76,4 +76,8 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
   border-radius: 100px;
   width: 150px;
   margin: 30px auto auto 30px;
+}
+
+.more-link {
+  margin-top: 8px;
 }
