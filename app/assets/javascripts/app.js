@@ -116,10 +116,6 @@ function RoutesIndexController($http) {
       count = count + 3;
     };
 
-    // vm.formatDistance = function(distance) {
-    //   return +(distance * 0.000621371).toFixed(2);
-    // };
-
     vm.formatDate = function(date) {
       var d = new Date(date);
       var year = d.getFullYear();
@@ -254,10 +250,6 @@ function RoutesShowController($http, $routeParams) {
         console.log("Something went wrong renaming that route");
       }
     };
-
-    // vm.formatDistance = function(distance) {
-    //   return (distance.toFixed(2));
-    // };
 
     vm.formatDate = function(date) {
       var d = new Date(date);
