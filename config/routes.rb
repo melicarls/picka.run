@@ -11,6 +11,6 @@ Rails.application.routes.draw do
     get '/users/:id', :to => 'users#show'
   end
 
-  # get '*path', to: 'site#index'
+  get '*path', to: 'site#index'
 
 end
