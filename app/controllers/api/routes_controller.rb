@@ -26,6 +26,12 @@ class Api::RoutesController < ApplicationController
     end
   end
 
+  def destroy
+    p "Hit routes destroy path"
+    route = Route.find(params[:id])
+    route.destroy
+  end
+
   private
 
   #Only allow users to edit name or favorite status
