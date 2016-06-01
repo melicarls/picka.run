@@ -5,12 +5,13 @@
       <div class="nav-wrapper">
         <a href="/routes" class="brand-logo">picka.run</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="/">About</a></li>
+          <li><%= link_to "About", root_path %></li>
           <% if !current_user %>
-            <li><a href="/auth/strava">Let's Go!</a></li>
+            <li><%= link_to "Let's Go", login_path %></li>
           <% else %>
-            <li><a href="/users/<%= current_user.id %>"><%= current_user.first_name %></a></li>
-            <li><a href="/logout">Log out</a></li>
+            <li>
+              <a href="/users/<%= current_user.id %>"><%= current_user.first_name %></a></li>
+            <li><%= link_to "Log Out", logout_path %></li>
           <% end %>
         </ul>
       </div>
