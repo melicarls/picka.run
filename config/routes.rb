@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', :to => 'sessions#create'
   get '/auth/failure', :to => 'sessions#failure'
   get '/logout', :to => 'sessions#destroy', :as => :logout
+  get '/demo', :to => 'sessions#demo', :as => :demo
 
   namespace :api,defaults: {format: :json} do
     resources :routes, except: [:new, :create, :edit]
