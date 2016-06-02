@@ -304,6 +304,7 @@ UsersShowController.$inject = ['$http', '$routeParams'];
 function UsersShowController($http, $routeParams) {
   console.log("Users show controller is connected");
   var vm = this;
+  vm.noRoutes = true;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
   vm.stroke = {color: '#FF5722',weight: 2};
@@ -317,6 +318,7 @@ function UsersShowController($http, $routeParams) {
   }).then(onUsersShowSuccess, onUsersShowError);
   function onUsersShowSuccess(response) {
     vm.user = response.data;
+    console.log(vm.user.routes);
   }
   function onUsersShowError(error) {
     console.log("There was an error: ", error);
@@ -340,6 +342,9 @@ function UsersShowController($http, $routeParams) {
       vm.routes = response.data.filter(function(route) {
         return route.favorite;
       });
+      if (vm.routes.length !== 0) {
+        vm.noRoutes = false;
+      }
       addMapInfo(vm.routes);
     }
 
