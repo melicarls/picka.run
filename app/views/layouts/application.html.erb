@@ -25,9 +25,19 @@
   <!-- materialize.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
   <%= javascript_include_tag :application %>
-  <title>Pickarun</title>
+  <title>picka.run</title>
 </head>
 <body>
+
+
+  <% flash.each do |key, value| %>
+    <div class="alert alert-dismissible alert-<%= key %>">
+      <script type="text/javascript">
+        Materialize.toast('<%= value %>', 4000)
+      </script>
+    </div>
+  <% end %>
+
 
 <%= yield %>
 

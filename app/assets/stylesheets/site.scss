@@ -79,9 +79,9 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 
 #profPic {
-  border-radius: 100px;
-  width: 150px;
-  margin: 30px auto auto 30px;
+  width: 60%;
+  margin: auto;
+  padding-top: 30px;
 }
 
 .more-link {
@@ -107,4 +107,33 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 
 .fa-pencil {
   font-size: .5em;
+}
+
+footer a {
+  color: white;
+}
+
+#about-box {
+  margin: 80px auto 80px auto;
+}
+
+#about-box p {
+  font-size: 20px;
+}
+
+a {
+  color: #FF5722
+}
+
+#about-box i {
+  color: #FF5722
+}
+
+#actions {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.centered {
+  text-align:center;
 }
