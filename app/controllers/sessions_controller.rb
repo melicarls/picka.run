@@ -31,6 +31,14 @@ class SessionsController < ApplicationController
     redirect_to '/routes'
   end
 
+  def demo
+    p "Hit demo user path"
+    @user = User.find_by(:strava_id => 12036596)
+    flash[:success] = "You have been logged in. Welcome back!"
+    session[:user_id] = @user.id
+    render json: @user
+  end
+
   def failure
     flash[:error] = "Your account could not be authenticated."
     redirect_to :index
