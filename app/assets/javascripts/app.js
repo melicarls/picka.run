@@ -159,9 +159,9 @@ function RoutesIndexController($http) {
 
 }
 
-RoutesShowController.$inject = ['$http', '$routeParams'];
+RoutesShowController.$inject = ['$http', '$routeParams', '$window'];
 
-function RoutesShowController($http, $routeParams) {
+function RoutesShowController($http, $routeParams, $window) {
   console.log("Routes show controller is connected");
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
@@ -205,12 +205,15 @@ function RoutesShowController($http, $routeParams) {
 
     vm.destroy = function(route) {
       console.log("Clicked destroy!");
-      $http({
-        method: 'DELETE',
-        url: '/api/routes/'+$routeParams.id
-      }).then(onDestroySuccess, onDestroyError);
+      if (confirm("Are you sure you want to delete this route? You won't be able to get it back.")) {
+        $http({
+          method: 'DELETE',
+          url: '/api/routes/'+$routeParams.id
+        }).then(onDestroySuccess, onDestroyError);
+      }
       function onDestroySuccess(response) {
         console.log(response);
+        $window.location.href = '/routes';
       }
       function onDestroyError(response) {
         console.log("Something went wrong deleting that route");

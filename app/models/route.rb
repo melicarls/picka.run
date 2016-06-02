@@ -1,6 +1,6 @@
 class Route < ActiveRecord::Base
 
-  has_many :activities
+  has_many :activities, dependent: :destroy
   belongs_to :user
 
   # Run this for all newly created activities
