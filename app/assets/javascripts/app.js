@@ -180,6 +180,7 @@ function RoutesShowController($http, $routeParams, $window) {
     vm.path = formatPolyline(vm.route.map);
   }
   function onRoutesShowError(error) {
+    $window.location.href = '/routes';
     console.log("There was an error: ", error);
   }
 
