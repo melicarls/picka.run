@@ -187,10 +187,6 @@ function RoutesExploreController($http) {
     vm.routes = response.data;
     navigator.geolocation.getCurrentPosition(function(position) {
       vm.routes = vm.routes.filter(function(el) {
-        console.log(position.coords.latitude);
-        console.log(position.coords.latitude.toFixed(2));
-        console.log(position.coords.longitude);
-        console.log(position.coords.longitude.toFixed(2));
         return (el.start_location[0] == position.coords.latitude.toFixed(2)) && (el.start_location[1] == position.coords.longitude.toFixed(2));
       });
       vm.displayRoute = getRandomRoute(vm.routes);

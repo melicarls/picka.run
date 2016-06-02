@@ -4,7 +4,7 @@
       <h3>Welcome to the routes explorer!</h3>
       <p class="col s12 m8">
         Click the button below to fetch a route run by another anonymous picka.run user.
-        It will only suggest routes within one mile of your current location.
+        It will only suggest routes starting near your current location.
       </p>
       <a class="btn-large pull-right col s12 m3 offset-m1 deep-orange" ng-click="routesExploreCtrl.refreshRandom(routesExploreCtrl.routes)">New Route</a>
     </div>
@@ -23,7 +23,7 @@
       <h5>User's time: {{routesExploreCtrl.formatTime(routesExploreCtrl.displayRoute.avg_time)}}</h5>
       <h5>User's pace: {{routesExploreCtrl.formatPace(routesExploreCtrl.displayRoute.avg_pace)}}</h5>
     </div>
-    <div class="col s4">
+    <div class="col s4" ng-show="routesExploreCtrl.show">
       <h5>Tags:</h5><div class="chip" ng-repeat="tag in routesExploreCtrl.displayRoute.tags">{{tag}}</div>
     </div>
   </div>
