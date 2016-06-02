@@ -6,6 +6,11 @@ class Api::RoutesController < ApplicationController
     render json: routes
   end
 
+  def all
+    routes = Route.where.not(user_id: current_user['id'])
+    render json: routes
+  end
+
   def show
     route = Route.find(params[:id])
     render json: route

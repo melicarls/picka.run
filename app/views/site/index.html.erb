@@ -10,6 +10,8 @@
           <% if !current_user %>
             <li><%= link_to "Let's Go!", '/auth/strava', method: 'get',  :class => "btn deep-orange waves-effect waves-light" %></li>
           <% else %>
+            <li><%= link_to "Your Routes", '/routes', method: 'get', :class => "btn waves-effect waves-light" %></li>
+            <li><%= link_to "Explore", '/explore', method: 'get', :class => "btn waves-effect waves-light" %></li>
             <li><a href="/users/<%= current_user.id %>" class="btn waves-effect waves-light">Profile</a></li>
             <li><%= link_to "Log Out", logout_path, method: 'get', :class => "btn waves-effect waves-light" %></li>
           <% end %>
@@ -19,7 +21,8 @@
           <% if !current_user %>
             <li><%= link_to "Let's Go!", '/auth/strava', method: 'get', :class => 'btn' %></li>
           <% else %>
-          <li><%= link_to "Routes", '/routes', method: 'get', :class => 'btn'%></li>
+            <li><%= link_to "Your Routes", '/routes', method: 'get', :class => "btn waves-effect waves-light" %></li>
+            <li><%= link_to "Explore", '/explore', method: 'get', :class => "btn waves-effect waves-light" %></li>
             <li><a href="/users/<%= current_user.id %>" class="btn">Profile</a></li>
             <li><%= link_to "Log Out", logout_path, method: 'get', :class => 'btn' %></li>
           <% end %>
