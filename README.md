@@ -7,10 +7,10 @@ picka.run is, simply put, a tool to help you pick a run. More specifically, it p
 
 ### Wireframes
 ![Entity Relationship Diagram]('/public/ERD.png')
-![Splash Page]('Landing.png')
-![Route Search Page]('../public/RIndex.png')
-![Route Details Page]('public/RShow.png')
-![User Profile]('public/UShow.png')
+![Splash Page]('/public/Landing.png')
+![Route Search Page]('/public/RIndex.png')
+![Route Details Page]('/public/RShow.png')
+![User Profile]('/public/UShow.png')
 
 
 ### Technologies
