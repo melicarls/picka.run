@@ -9,7 +9,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- font awesome -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-  <%= stylesheet_link_tag :application, media: :all %>
+  <!-- google fonts -->
+<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>  <%= stylesheet_link_tag :application, media: :all %>
   <!-- jquery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js"></script>
   <!-- lodash -->
@@ -24,10 +25,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.3.3/angular-google-maps.min.js"></script>
   <!-- materialize.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+  <!-- angular-materialize -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.1.8/angular-materialize.min.js"></script>
   <%= javascript_include_tag :application %>
-  <title>Pickarun</title>
+  <title>picka.run</title>
 </head>
 <body>
+
+
+  <% flash.each do |key, value| %>
+    <div class="alert alert-dismissible alert-<%= key %>">
+      <script type="text/javascript">
+        Materialize.toast('<%= value %>', 4000)
+      </script>
+    </div>
+  <% end %>
+
 
 <%= yield %>
 

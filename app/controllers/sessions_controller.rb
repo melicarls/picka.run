@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  
+
   def create
     auth_hash = request.env['omniauth.auth']
     user = User.find_by(strava_id: auth_hash[:extra][:raw_info][:id])
@@ -31,16 +31,22 @@ class SessionsController < ApplicationController
     redirect_to '/routes'
   end
 
+  def demo
+    p "Hit demo user path"
+    @user = User.find_by(:strava_id => 12036596)
+    flash[:success] = "You have been logged in. Welcome back!"
+    session[:user_id] = @user.id
+    render json: @user
+  end
+
   def failure
-    flash[:error] = "Your account could not be authenticated"
+    flash[:error] = "Your account could not be authenticated."
     redirect_to :index
   end
 
   def destroy
     session[:user_id] = nil
-    puts "Logged out!"
-    puts "This is the session", session
-    flash[:success] = "You have logged out!"
+    flash[:success] = "You have been logged out."
     redirect_to '/'
   end
 

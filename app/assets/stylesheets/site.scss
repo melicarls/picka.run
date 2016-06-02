@@ -1,6 +1,10 @@
 // Place all the styles related to the Site controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+h1, h2, h3, h4, a {
+  font-family: 'Raleway', sans-serif;
+}
+
 .nav-wrapper {
   margin: 0px 20px;
 }
@@ -44,8 +48,9 @@ input[type=number] {
 }
 // end remove scroll
 
-.fa {
+.favorite-star {
   margin-top: 30px;
+  margin-right: 10px;
 }
 
 .angular-google-map-container {
@@ -78,9 +83,9 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 
 #profPic {
-  border-radius: 100px;
-  width: 150px;
-  margin: 30px auto auto 30px;
+  width: 60%;
+  margin: auto;
+  padding-top: 30px;
 }
 
 .more-link {
@@ -106,4 +111,33 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 
 .fa-pencil {
   font-size: .5em;
+}
+
+footer a {
+  color: white;
+}
+
+#about-box {
+  margin: 80px auto 80px auto;
+}
+
+#about-box p {
+  font-size: 20px;
+}
+
+a {
+  color: #FF5722
+}
+
+#about-box i {
+  color: #FF5722
+}
+
+#actions {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.centered {
+  text-align:center;
 }

@@ -1,4 +1,4 @@
-angular.module('pickarun', ['ngRoute', 'templates', 'uiGmapgoogle-maps'])
+angular.module('pickarun', ['ngRoute', 'templates', 'uiGmapgoogle-maps', 'ui.materialize'])
        .config(config)
        .controller('HomeIndexController', HomeIndexController)
        .controller('RoutesIndexController', RoutesIndexController)
@@ -51,7 +51,7 @@ function RoutesIndexController($http) {
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
-  vm.stroke = {color: '#D94343',weight: 3};
+  vm.stroke = {color: '#FF5722',weight: 2};
   vm.options = {
      styles: mapStyles
   };
@@ -116,10 +116,6 @@ function RoutesIndexController($http) {
       count = count + 3;
     };
 
-    vm.formatDistance = function(distance) {
-      return +(distance * 0.000621371).toFixed(2);
-    };
-
     vm.formatDate = function(date) {
       var d = new Date(date);
       var year = d.getFullYear();
@@ -163,14 +159,14 @@ function RoutesIndexController($http) {
 
 }
 
-RoutesShowController.$inject = ['$http', '$routeParams'];
+RoutesShowController.$inject = ['$http', '$routeParams', '$window'];
 
-function RoutesShowController($http, $routeParams) {
+function RoutesShowController($http, $routeParams, $window) {
   console.log("Routes show controller is connected");
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
-  vm.stroke = {color: '#D94343',weight: 4};
+  vm.stroke = {color: '#FF5722',weight: 3};
   vm.options = {
      styles: mapStyles
   };
@@ -184,6 +180,7 @@ function RoutesShowController($http, $routeParams) {
     vm.path = formatPolyline(vm.route.map);
   }
   function onRoutesShowError(error) {
+    $window.location.href = '/routes';
     console.log("There was an error: ", error);
   }
 
@@ -207,8 +204,26 @@ function RoutesShowController($http, $routeParams) {
     console.log("There was an error: ", error);
   }
 
+    vm.destroy = function(route) {
+      console.log("Clicked destroy!");
+      if (confirm("Are you sure you want to delete this route? You won't be able to get it back.")) {
+        $http({
+          method: 'DELETE',
+          url: '/api/routes/'+$routeParams.id
+        }).then(onDestroySuccess, onDestroyError);
+      }
+      function onDestroySuccess(response) {
+        console.log(response);
+        $window.location.href = '/routes';
+      }
+      function onDestroyError(response) {
+        console.log("Something went wrong deleting that route");
+      }
+    };
+
     vm.favorite = function(route) {
       vm.route.favorite=true;
+      starSpin();
       $http({
         method: 'PATCH',
         url: '/api/routes/'+$routeParams.id,
@@ -225,6 +240,7 @@ function RoutesShowController($http, $routeParams) {
 
     vm.unfavorite = function(route) {
       vm.route.favorite=false;
+      starSpin();
       $http({
         method: 'PATCH',
         url: '/api/routes/'+$routeParams.id,
@@ -238,6 +254,13 @@ function RoutesShowController($http, $routeParams) {
         vm.route.favorite=true;
       }
     };
+
+    function starSpin() {
+      $('.favorite-star').addClass('fa-spin');
+      setTimeout(function() {
+        $('.favorite-star').removeClass('fa-spin');
+      }, 420);
+    }
 
     vm.rename = function(route) {
       vm.editing = false;
@@ -253,10 +276,6 @@ function RoutesShowController($http, $routeParams) {
       function onRenameError(error) {
         console.log("Something went wrong renaming that route");
       }
-    };
-
-    vm.formatDistance = function(distance) {
-      return +(distance * 0.000621371).toFixed(2);
     };
 
     vm.formatDate = function(date) {
@@ -294,9 +313,10 @@ UsersShowController.$inject = ['$http', '$routeParams'];
 function UsersShowController($http, $routeParams) {
   console.log("Users show controller is connected");
   var vm = this;
+  vm.noRoutes = true;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
-  vm.stroke = {color: '#D94343',weight: 3};
+  vm.stroke = {color: '#FF5722',weight: 2};
   vm.options = {
      styles: mapStyles
   };
@@ -307,6 +327,7 @@ function UsersShowController($http, $routeParams) {
   }).then(onUsersShowSuccess, onUsersShowError);
   function onUsersShowSuccess(response) {
     vm.user = response.data;
+    console.log(vm.user.routes);
   }
   function onUsersShowError(error) {
     console.log("There was an error: ", error);
@@ -330,6 +351,9 @@ function UsersShowController($http, $routeParams) {
       vm.routes = response.data.filter(function(route) {
         return route.favorite;
       });
+      if (vm.routes.length !== 0) {
+        vm.noRoutes = false;
+      }
       addMapInfo(vm.routes);
     }
 
@@ -355,8 +379,21 @@ function UsersShowController($http, $routeParams) {
 
 }
 
-HomeIndexController.$inject=[];
-function HomeIndexController() {
+HomeIndexController.$inject=['$http', '$window'];
+function HomeIndexController($http, $window) {
+  var vm = this;
+  vm.demoUser = function() {
+    $http({
+      method: 'GET',
+      url: '/demo',
+    }).then(onDemoSuccess, onDemoError);
+    function onDemoSuccess(response) {
+      $window.location.href = '/routes';
+    }
+    function onDemoError(error) {
+      console.log("There was an error logging in to the demo account: ", error);
+    }
+  };
 }
 
 var mapStyles=[

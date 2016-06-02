@@ -1,11 +1,13 @@
 class Route < ActiveRecord::Base
 
+  has_many :activities, dependent: :destroy
+  belongs_to :user
+
   # Run this for all newly created activities
   def self.match_to_route(user, activity)
     matched = false
     # Get all routes that belong to a user
     p "Checking a new activity! ", activity
-    p "This is the user whose routes we're generating: ", user
     @routes = Route.where(:user_id => user[:id])
     p "The user has these routes: ", @routes
     if !@routes.empty?
@@ -35,8 +37,6 @@ class Route < ActiveRecord::Base
     end
     # Create a new route if the activity still hasn't been matched
     if !matched
-      p "The activity couldn't be matched to any existing routes"
-      p user
       create_route_from_activity(user, activity)
     end
   end
@@ -44,7 +44,7 @@ class Route < ActiveRecord::Base
   # Run this when a route could not be found for an activity
   def self.create_route_from_activity(user, activity)
     r = Route.new
-    r.name = activity.distance.to_s + " mile route"
+    r.name = activity.distance.round(0).to_s + " mile route"
     r.last_completed = activity.date
     r.distance = activity.distance
     r.avg_time = activity.time
@@ -57,57 +57,40 @@ class Route < ActiveRecord::Base
     r.favorite = false
     r.user_id = user[:id]
     if r.save
-      p "New route created"
-      p "Here's the id from that route", r[:id]
       activity[:route_id] = r[:id]
       activity.save
       apply_tags(r)
-    else
-      p "Something went wrong making that route"
     end
   end
-
 
   # Run this when a route is matched to an activity
   def self.reset_route_avgs(activity, route)
-    p "Route's averages are being reset since a new activity was matched"
     route_activities = Activity.where(:route_id => route[:id])
-    p "Here are the activities associated with the route", route_activities
     num_activities = route_activities.length
     # Reset the route attributes that depend on averages
-    route.distance = ((route.distance * num_activities) + activity.distance) / (num_activities + 1)
+    route.distance = (((route.distance * num_activities) + activity.distance) / (num_activities + 1)).round(2)
     route.avg_time = ((route.avg_time * num_activities) + activity.time) / (num_activities + 1)
     route.avg_pace = ((route.avg_pace * num_activities) + activity.pace) / (num_activities + 1)
     # Add the route's id to the activity so it will be called up the next time this function is fun
-    p "This is the route's id: ", route[:id]
+    route.save
     activity[:route_id] = route[:id]
     activity.save
-    p "Here's reference key on the activity: ", activity[:route_id]
   end
 
 
-
   def self.apply_tags(route)
-    p "Going to add some tags"
     if route.elevation_gain > 400
-      p "adding very hilly tag"
       route.tags.push("Very hilly")
     end
     if route.elevation_gain < 400 && route.elevation_gain > 50
-      p "Here's the activity's tags to start with: ", route.tags
-      p "adding hilly tag"
       route.tags.push("Hilly")
-      p "And after adding the tag: ", route.tags
     end
     if route.elevation_gain < 50
-      p "adding flat tag"
       route.tags.push("Flat")
     end
     if (route.start_location[0] != route.end_location[0]) && (route.start_location[1] != route.end_location[1])
-      p "adding one-way tag"
       route.tags.push("One-way")
     else
-      p "adding round trip tag"
       route.tags.push("Round trip")
     end
     route.save
@@ -128,14 +111,14 @@ class Route < ActiveRecord::Base
       end
     end
     # Need to return this pair with a fixed number of decimal points
-    four_decimal_points(farthest_pair)
+    three_decimal_points(farthest_pair)
   end
 
 
 # Adjust the rounding to set the precision of the match
-  def self.four_decimal_points(pair)
-    p "Here's the rounded pair: ", [pair[0].round(4), pair[1].round(4)]
-    return [pair[0].round(4), pair[1].round(4)]
+  def self.three_decimal_points(pair)
+    p "Here's the rounded pair: ", [pair[0].round(3), pair[1].round(3)]
+    return [pair[0].round(3), pair[1].round(3)]
   end
 
 #Returns distance between two given sets of coordinates
