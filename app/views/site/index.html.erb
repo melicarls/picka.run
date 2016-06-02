@@ -1,17 +1,17 @@
 <body>
 
   <header>
-    <nav class="grey">
+    <nav class="teal">
       <div class="nav-wrapper">
         <a href="/routes" class="brand-logo">picka.run</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-          <li><%= link_to "About", root_path %></li>
+          <li><%= link_to "About", root_path, :class => 'btn waves-effect waves-light' %></li>
           <% if !current_user %>
-            <li><%= link_to "Let's Go!", '/auth/strava', method: 'get' %></li>
+            <li><%= link_to "Let's Go!", '/auth/strava', method: 'get',  :class => "btn deep-orange waves-effect waves-light" %></li>
           <% else %>
-            <li><a href="/users/<%= current_user.id %>"><%= current_user.first_name %></a></li>
-            <li><%= link_to "Log Out", logout_path, method: 'get' %></li>
+            <li><a href="/users/<%= current_user.id %>" class="btn waves-effect waves-light">Profile</a></li>
+            <li><%= link_to "Log Out", logout_path, method: 'get', :class => "btn waves-effect waves-light" %></li>
           <% end %>
         </ul>
         <ul class="side-nav" id="mobile-demo">
@@ -31,11 +31,11 @@
     <div ng-view></div>
   </main>
 
-  <footer class="page-footer grey">
+  <footer class="page-footer teal">
     <div class="footer-copyright">
       <div class="container">
-        Created by <a href="http://www.melicarls.com" target="_blank">Melissa Carlson</a>
-      <a class="grey-text text-lighten-4 right" href="#!">Check out picka.run on GitHub</a>
+        <a href="http://www.melicarls.com" target="_blank">Created by Melissa Carlson</a>
+        <a class="grey-text text-lighten-4 right" href="https://github.com/melicarls/picka.run" target="_blank">Check out picka.run on GitHub <i class="fa fa-github" aria-hidden="true"></i></a>
       </div>
     </div>
   </footer>

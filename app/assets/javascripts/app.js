@@ -51,7 +51,7 @@ function RoutesIndexController($http) {
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
-  vm.stroke = {color: '#D94343',weight: 3};
+  vm.stroke = {color: '#FF5722',weight: 2};
   vm.options = {
      styles: mapStyles
   };
@@ -166,7 +166,7 @@ function RoutesShowController($http, $routeParams, $window) {
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
-  vm.stroke = {color: '#D94343',weight: 4};
+  vm.stroke = {color: '#FF5722',weight: 3};
   vm.options = {
      styles: mapStyles
   };
@@ -306,7 +306,7 @@ function UsersShowController($http, $routeParams) {
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
-  vm.stroke = {color: '#D94343',weight: 3};
+  vm.stroke = {color: '#FF5722',weight: 2};
   vm.options = {
      styles: mapStyles
   };
