@@ -53,6 +53,8 @@ function config (  $routeProvider,   $locationProvider ,  uiGmapGoogleMapApiProv
 RoutesIndexController.$inject = ['$http'];
 
 function RoutesIndexController($http) {
+  $('.nav-tab').removeClass('deep-orange');
+  $('#routes').addClass('deep-orange');
   console.log("Routes index controller is connected");
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
@@ -61,7 +63,6 @@ function RoutesIndexController($http) {
   vm.options = {
      styles: mapStyles
   };
-
   $http({
     method: 'GET',
     url: '/api/routes'
@@ -168,6 +169,8 @@ function RoutesIndexController($http) {
 RoutesExploreController.$inject = ['$http'];
 
 function RoutesExploreController($http) {
+  $('.nav-tab').removeClass('deep-orange');
+  $('#explore').addClass('deep-orange');
   var vm = this;
   vm.show = false;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
@@ -258,6 +261,7 @@ function RoutesExploreController($http) {
 RoutesShowController.$inject = ['$http', '$routeParams', '$window'];
 
 function RoutesShowController($http, $routeParams, $window) {
+  $('.nav-tab').removeClass('deep-orange');
   console.log("Routes show controller is connected");
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
@@ -355,7 +359,7 @@ function RoutesShowController($http, $routeParams, $window) {
       $('.favorite-star').addClass('fa-spin');
       setTimeout(function() {
         $('.favorite-star').removeClass('fa-spin');
-      }, 420);
+      }, 840);
     }
 
     vm.rename = function(route) {
@@ -407,7 +411,8 @@ function RoutesShowController($http, $routeParams, $window) {
 UsersShowController.$inject = ['$http', '$routeParams'];
 
 function UsersShowController($http, $routeParams) {
-  console.log("Users show controller is connected");
+  $('.nav-tab').removeClass('deep-orange');
+  $('#profile').addClass('deep-orange');
   var vm = this;
   vm.noRoutes = true;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
@@ -477,6 +482,8 @@ function UsersShowController($http, $routeParams) {
 
 HomeIndexController.$inject=['$http', '$window'];
 function HomeIndexController($http, $window) {
+  $('.nav-tab').removeClass('deep-orange');
+  $('#about').addClass('deep-orange');
   var vm = this;
   vm.demoUser = function() {
     $http({
