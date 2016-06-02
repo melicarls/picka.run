@@ -23,12 +23,12 @@
     <div class="col s12 m8 routeList">
       <br />
       <h4>Favorite Routes:</h4>
-      <div class="centered" ng-hide="usrsShowCtrl.routes" >
+      <div class="centered" ng-show="usersShowCtrl.noRoutes" >
         <i class="fa fa-map-signs fa-5x" aria-hidden="true"></i>
         <h5>Hmm, you don't have any favorite routes just yet. <a href="/routes">Click here </a>to browse and pick 'em out.
           Then, visit the route details page to click the star and save some favorites. They'll appear here.</h5>
       </div>
-      <div class="row" ng-show="usrsShowCtrl.routes" >
+      <div class="row" ng-hide="usersShowCtrl.noRoutes" >
         <div ng-repeat="route in usersShowCtrl.routes" class="col s12 m6">
           <div class="card">
             <div class="card-image">
