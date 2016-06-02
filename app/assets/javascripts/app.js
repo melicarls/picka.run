@@ -359,7 +359,7 @@ function RoutesShowController($http, $routeParams, $window) {
       $('.favorite-star').addClass('fa-spin');
       setTimeout(function() {
         $('.favorite-star').removeClass('fa-spin');
-      }, 420);
+      }, 840);
     }
 
     vm.rename = function(route) {
