@@ -165,13 +165,11 @@ function RoutesIndexController($http) {
 
 }
 
-// ---------------------
-
 RoutesExploreController.$inject = ['$http'];
 
 function RoutesExploreController($http) {
-  console.log("Routes explore controller is connected");
   var vm = this;
+  vm.show = false;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
   vm.stroke = {color: '#FF5722',weight: 2};
@@ -189,6 +187,10 @@ function RoutesExploreController($http) {
     vm.routes = response.data;
     navigator.geolocation.getCurrentPosition(function(position) {
       vm.routes = vm.routes.filter(function(el) {
+        console.log(position.coords.latitude);
+        console.log(position.coords.latitude.toFixed(2));
+        console.log(position.coords.longitude);
+        console.log(position.coords.longitude.toFixed(2));
         return (el.start_location[0] == position.coords.latitude.toFixed(2)) && (el.start_location[1] == position.coords.longitude.toFixed(2));
       });
       vm.displayRoute = getRandomRoute(vm.routes);
@@ -198,6 +200,7 @@ function RoutesExploreController($http) {
   }
 
   vm.refreshRandom = function(routes) {
+    vm.show = true;
     vm.displayRoute = getRandomRoute(routes);
     vm.start = {latitude:vm.displayRoute.start_location[0], longitude:vm.displayRoute.start_location[1]};
     vm.path = formatPolyline(vm.displayRoute.map);
@@ -227,11 +230,34 @@ function RoutesExploreController($http) {
       return results_arr;
     }
 
+    vm.formatDate = function(date) {
+      var d = new Date(date);
+      var year = d.getFullYear();
+      var month = d.getMonth() + 1;
+      var day = d.getDate();
+      return (month + "/" + day + "/" + year);
+    };
+
+    vm.formatTime = function(time) {
+      var hours = parseInt(time / 3600) % 24;
+      var minutes = parseInt(time / 60) % 60;
+      var seconds = parseInt(time % 60);
+      return ((hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds));
+    };
+
+    vm.formatPace = function(pace) {
+      // convert to mi/hr
+      pace = pace * 2.2369;
+      // convert to min/mi
+      pace = 60/pace;
+      // format
+      var min = Math.floor(pace);
+      var sec = (pace - min) * 60;
+      sec = Math.floor(sec);
+      return(min+":"+(sec  < 10 ? "0" + sec : sec));
+    };
+
 }
-
-// ---------------------
-
-
 
 RoutesShowController.$inject = ['$http', '$routeParams', '$window'];
 
