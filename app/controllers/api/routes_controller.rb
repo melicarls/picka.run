@@ -1,7 +1,5 @@
 class Api::RoutesController < ApplicationController
 
-
-  # Tighten this up so it only returns a given user's routes
   def index
     user = current_user
     routes = Route.where(:user_id => user['id']).order("last_completed DESC")
@@ -14,7 +12,6 @@ class Api::RoutesController < ApplicationController
   end
 
   def update
-    p "Hit the update route path"
     route = Route.find(params[:id])
     route.update(route_params)
     route.favorite = params[:favorite]
@@ -26,9 +23,9 @@ class Api::RoutesController < ApplicationController
   end
 
   def destroy
-    p "Hit routes destroy path"
     route = Route.find(params[:id])
     route.destroy
+    flash[:success] = route.name + " has been deleted."
     render json: route
   end
 
