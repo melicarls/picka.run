@@ -15,3 +15,15 @@
 //= require angular-rails-templates
 //= require_tree ../templates
 //= require_tree .
+
+$(document).ready(function() {
+  console.log("Document is ready!");
+
+  $(document).on('click','.favorite-star', function(e) {
+    $('.favorite-star').addClass('fa-spin');
+    setTimeout(function() {
+      $('.favorite-star').removeClass('fa-spin');
+    }, 420);
+  });
+
+});
