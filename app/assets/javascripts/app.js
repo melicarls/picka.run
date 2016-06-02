@@ -116,10 +116,6 @@ function RoutesIndexController($http) {
       count = count + 3;
     };
 
-    vm.formatDistance = function(distance) {
-      return +(distance * 0.000621371).toFixed(2);
-    };
-
     vm.formatDate = function(date) {
       var d = new Date(date);
       var year = d.getFullYear();
@@ -163,9 +159,9 @@ function RoutesIndexController($http) {
 
 }
 
-RoutesShowController.$inject = ['$http', '$routeParams'];
+RoutesShowController.$inject = ['$http', '$routeParams', '$window'];
 
-function RoutesShowController($http, $routeParams) {
+function RoutesShowController($http, $routeParams, $window) {
   console.log("Routes show controller is connected");
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
@@ -184,6 +180,7 @@ function RoutesShowController($http, $routeParams) {
     vm.path = formatPolyline(vm.route.map);
   }
   function onRoutesShowError(error) {
+    $window.location.href = '/routes';
     console.log("There was an error: ", error);
   }
 
@@ -206,6 +203,23 @@ function RoutesShowController($http, $routeParams) {
   function onActivitiesError(error) {
     console.log("There was an error: ", error);
   }
+
+    vm.destroy = function(route) {
+      console.log("Clicked destroy!");
+      if (confirm("Are you sure you want to delete this route? You won't be able to get it back.")) {
+        $http({
+          method: 'DELETE',
+          url: '/api/routes/'+$routeParams.id
+        }).then(onDestroySuccess, onDestroyError);
+      }
+      function onDestroySuccess(response) {
+        console.log(response);
+        $window.location.href = '/routes';
+      }
+      function onDestroyError(response) {
+        console.log("Something went wrong deleting that route");
+      }
+    };
 
     vm.favorite = function(route) {
       vm.route.favorite=true;
@@ -253,10 +267,6 @@ function RoutesShowController($http, $routeParams) {
       function onRenameError(error) {
         console.log("Something went wrong renaming that route");
       }
-    };
-
-    vm.formatDistance = function(distance) {
-      return +(distance * 0.000621371).toFixed(2);
     };
 
     vm.formatDate = function(date) {

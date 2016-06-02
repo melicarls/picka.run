@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get '/logout', :to => 'sessions#destroy', :as => :logout
 
   namespace :api,defaults: {format: :json} do
-    resources :routes, except: [:new, :create, :edit, :destroy]
+    resources :routes, except: [:new, :create, :edit]
     get '/activities/:route_id', :to => 'activities#index'
     get '/users/:id', :to => 'users#show'
   end
