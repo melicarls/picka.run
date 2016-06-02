@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/demo', :to => 'sessions#demo', :as => :demo
 
   namespace :api,defaults: {format: :json} do
+    get '/routes/all', :to => 'routes#all'
     resources :routes, except: [:new, :create, :edit]
     get '/activities/:route_id', :to => 'activities#index'
     get '/users/:id', :to => 'users#show'
