@@ -1,4 +1,4 @@
-# [picka.run] (https://www.picka.run)
+# [picka.run] (http://www.picka.run)
 
 ### Description
 
@@ -6,10 +6,15 @@ picka.run is, simply put, a tool to help you pick a run. More specifically, it p
 
 
 ### Wireframes
+ERD:
 ![Entity Relationship Diagram](public/ERD.png)
+Landing Page:
 ![Splash Page](public/Landing.png)
+Route Search:
 ![Route Search Page](public/RIndex.png)
+Route Details:
 ![Route Details Page](public/RShow.png)
+User Profile:
 ![User Profile](public/UShow.png)
 
 
