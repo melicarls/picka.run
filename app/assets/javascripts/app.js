@@ -223,6 +223,7 @@ function RoutesShowController($http, $routeParams, $window) {
 
     vm.favorite = function(route) {
       vm.route.favorite=true;
+      starSpin();
       $http({
         method: 'PATCH',
         url: '/api/routes/'+$routeParams.id,
@@ -239,6 +240,7 @@ function RoutesShowController($http, $routeParams, $window) {
 
     vm.unfavorite = function(route) {
       vm.route.favorite=false;
+      starSpin();
       $http({
         method: 'PATCH',
         url: '/api/routes/'+$routeParams.id,
@@ -252,6 +254,13 @@ function RoutesShowController($http, $routeParams, $window) {
         vm.route.favorite=true;
       }
     };
+
+    function starSpin() {
+      $('.favorite-star').addClass('fa-spin');
+      setTimeout(function() {
+        $('.favorite-star').removeClass('fa-spin');
+      }, 420);
+    }
 
     vm.rename = function(route) {
       vm.editing = false;
