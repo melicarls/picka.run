@@ -1,4 +1,4 @@
-angular.module('pickarun', ['ngRoute', 'templates', 'uiGmapgoogle-maps'])
+angular.module('pickarun', ['ngRoute', 'templates', 'uiGmapgoogle-maps', 'ui.materialize'])
        .config(config)
        .controller('HomeIndexController', HomeIndexController)
        .controller('RoutesIndexController', RoutesIndexController)
