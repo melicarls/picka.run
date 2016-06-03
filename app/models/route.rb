@@ -2,6 +2,26 @@ class Route < ActiveRecord::Base
   has_many :activities, dependent: :destroy
   belongs_to :user
 
+  validates :name,
+            presence: true,
+            length:   { maximum: 255 }
+  validates :distance,
+            presence: true
+  validates :avg_time,
+            presence: true
+  validates :avg_pace,
+            presence: true
+  validates :map,
+            presence: true
+  validates :start_location,
+            presence: true
+  validates :end_location,
+            presence: true
+  validates :elevation_gain,
+            presence: true
+  validates :user_id,
+            presence: true
+
   # Compares newly created activities to the user's route
   # Either links the activity to a route or creates a new route based on the unique activity
   def self.match_to_route(user, activity)
