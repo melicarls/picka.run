@@ -2,6 +2,26 @@ class Activity < ActiveRecord::Base
   belongs_to :user
   belongs_to :route
 
+  validates :name,
+            presence: true,
+            length:   { maximum: 255 }
+  validates :distance,
+            presence: true
+  validates :time,
+            presence: true
+  validates :pace,
+            presence: true
+  validates :map,
+            presence: true
+  validates :strava_id,
+            presence: true
+  validates :start_location,
+            presence: true
+  validates :end_location,
+            presence: true
+  validates :elevation_gain,
+            presence: true
+
   def self.fetch_user_activities(user, params)
     # fetch all of the current user's activities from strava
     @client = Strava::Api::V3::Client.new(:access_token => user.token)

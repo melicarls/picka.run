@@ -2,6 +2,24 @@ class Route < ActiveRecord::Base
   has_many :activities, dependent: :destroy
   belongs_to :user
 
+  validates :name,
+            presence: true,
+            length:   { maximum: 255 }
+  validates :distance,
+            presence: true
+  validates :avg_time,
+            presence: true
+  validates :avg_pace,
+            presence: true
+  validates :map,
+            presence: true
+  validates :start_location,
+            presence: true
+  validates :end_location,
+            presence: true
+  validates :elevation_gain,
+            presence: true
+
   # Compares newly created activities to the user's route
   # Either links the activity to a route or creates a new route based on the unique activity
   def self.match_to_route(user, activity)
@@ -18,9 +36,17 @@ class Route < ActiveRecord::Base
           route_farthest = farthest_point(route.map, route.start_location)
           # Find the point that is furthest from the activity's start
           activity_farthest = farthest_point(activity.map, activity.start_location)
-          # If they match, add the activity to the routes and vice versa. This is done in the reset avgs function
-          # Adjust the route to account for the way that the newly added activity should change its averages
-          if route_farthest == activity_farthest
+          # Check whether the farthest point longitude is within an acceptable range
+          longOk = (activity_farthest[0] <= route_farthest[0] + 0.01 ) && (activity_farthest[0] >= route_farthest[0] - 0.01)
+          latOk = (activity_farthest[1] <= route_farthest[1] + 0.01 ) && (activity_farthest[1] >= route_farthest[1] - 0.01)
+          # if the route's farthest point matches and the start and end location matches, pair them
+          if (longOk && latOk) &&
+            (activity.start_location[0] == route.start_location[0]) &&
+            (activity.start_location[1] == route.start_location[1]) &&
+            (activity.end_location[0] == activity.end_location[0]) &&
+            (activity.end_location[1] == activity.end_location[1])
+            # If they match, add the activity to the routes and vice versa. This is done in the reset avgs function
+            # Adjust the route to account for the way that the newly added activity should change its averages
             matched = true
             reset_route_avgs(activity, route)
           end
