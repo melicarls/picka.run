@@ -34,6 +34,10 @@ function RoutesExploreController($http) {
       vm.routes = vm.routes.filter(function(el) {
         return (el.start_location[0] == position.coords.latitude.toFixed(2)) && (el.start_location[1] == position.coords.longitude.toFixed(2));
       });
+      // display a message and hide the button if there aren't any routes available in the area yet
+      if (vm.routes.length === 0) {
+        vm.noRoutes = true;
+      }
       // randomly select a route to render
       vm.displayRoute = getRandomRoute(vm.routes);
       // set map attributes according to selected route
