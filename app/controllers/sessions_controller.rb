@@ -41,7 +41,7 @@ class SessionsController < ApplicationController
   def demo
     # log user in as Melissa Carlson
     @user = User.find_by(:strava_id => 12036596)
-    flash[:success] = "You have been logged in. Welcome back!"
+    flash[:success] = "You have been logged in to a test account. Welcome!"
     session[:user_id] = @user.id
     render json: @user
   end
