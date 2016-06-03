@@ -19,8 +19,6 @@ class Route < ActiveRecord::Base
             presence: true
   validates :elevation_gain,
             presence: true
-  validates :user_id,
-            presence: true
 
   # Compares newly created activities to the user's route
   # Either links the activity to a route or creates a new route based on the unique activity

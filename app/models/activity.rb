@@ -21,10 +21,6 @@ class Activity < ActiveRecord::Base
             presence: true
   validates :elevation_gain,
             presence: true
-  validates :user_id,
-            presence: true
-  validates :route_id,
-            presence: true
 
   def self.fetch_user_activities(user, params)
     # fetch all of the current user's activities from strava
