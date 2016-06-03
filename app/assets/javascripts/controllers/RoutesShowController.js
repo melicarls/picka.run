@@ -4,7 +4,6 @@ RoutesShowController.$inject = ['$http', '$routeParams', '$window'];
 
 function RoutesShowController($http, $routeParams, $window) {
   $('.nav-tab').removeClass('deep-orange');
-  console.log("Routes show controller is connected");
   var vm = this;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
@@ -47,7 +46,6 @@ function RoutesShowController($http, $routeParams, $window) {
   }
 
     vm.destroy = function(route) {
-      console.log("Clicked destroy!");
       if (confirm("Are you sure you want to delete this route? You won't be able to get it back.")) {
         $http({
           method: 'DELETE',
@@ -55,7 +53,6 @@ function RoutesShowController($http, $routeParams, $window) {
         }).then(onDestroySuccess, onDestroyError);
       }
       function onDestroySuccess(response) {
-        console.log(response);
         $window.location.href = '/routes';
       }
       function onDestroyError(response) {
@@ -112,7 +109,6 @@ function RoutesShowController($http, $routeParams, $window) {
         data: vm.route
       }).then(onRenameSuccess, onRenameError);
       function onRenameSuccess(response) {
-        console.log("The route has been renamed!");
         vm.editing = false;
       }
       function onRenameError(error) {
