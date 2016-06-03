@@ -56,7 +56,7 @@ function RoutesIndexController($http) {
   var routesArray;
   var count = 3;
   vm.range = function(routes, targetDistance){
-    // reset the rendered count when input is erased
+    // reset the rendered count when input is erased so only 3 routes matching the new distance will show
     if (targetDistance === null) {
       count = 3;
     }
@@ -68,9 +68,11 @@ function RoutesIndexController($http) {
       }
     });
     // check if there are more routes that can be rendered. if not, hide the more button
-    if (routesArray.length < count) {
-      vm.moreAvailable = false;
-    }
+    if (routesArray.length > count) {
+       vm.moreAvailable = true;
+     } else {
+       vm.moreAvailable = false;
+     }
     // return the necessary number of matching records
     return routesArray.splice(0, count);
   };
