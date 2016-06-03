@@ -27,8 +27,6 @@ gem 'strava-api-v3'
 
 gem 'omniauth-strava'
 
-gem 'httparty'
-
 gem 'polylines'
 
 gem 'dotenv-rails'

@@ -1,35 +1,27 @@
 class Route < ActiveRecord::Base
-
   has_many :activities, dependent: :destroy
   belongs_to :user
 
-  # Run this for all newly created activities
+  # Compares newly created activities to the user's route
+  # Either links the activity to a route or creates a new route based on the unique activity
   def self.match_to_route(user, activity)
     matched = false
-    # Get all routes that belong to a user
-    p "Checking a new activity! ", activity
+    # Get all routes that belong to the user
     @routes = Route.where(:user_id => user[:id])
-    p "The user has these routes: ", @routes
+    # if there are routes, check each one to see if it matches the activity
     if !@routes.empty?
       @routes.each do |route|
-        p "Comparing activity distance: ", activity.distance
-        p "to route distance: ", route.distance
-        # Check distance
+        # Check distance for a match within 1/4 mile
         if (activity.distance).between?((route.distance - 0.25), (route.distance + 0.25))
-          p "The activity is within the acceptable distance"
         # If it's a match, compare the map points
           # Find the point that is furthest from route's start
           route_farthest = farthest_point(route.map, route.start_location)
-          p "Here's the route's farthest point: ", route_farthest
           # Find the point that is furthest from the activity's start
           activity_farthest = farthest_point(activity.map, activity.start_location)
-          p "Here's the activity's farthest point: ", activity_farthest
+          # If they match, add the activity to the routes and vice versa. This is done in the reset avgs function
+          # Adjust the route to account for the way that the newly added activity should change its averages
           if route_farthest == activity_farthest
-            p "The activity's farthest point lines up with the route's farthest point"
             matched = true
-            p "Changing matched to true!", matched
-            # If they match, add the activity to the routes and vice versa. This is done in the reset avgs function
-            # Adjust the route to account for the way that the newly added activity should change its averages
             reset_route_avgs(activity, route)
           end
         end
@@ -77,7 +69,7 @@ class Route < ActiveRecord::Base
     activity.save
   end
 
-
+# add string tags to the route's tags array
   def self.apply_tags(route)
     if route.elevation_gain > 400
       route.tags.push("Very hilly")
@@ -102,10 +94,7 @@ class Route < ActiveRecord::Base
     farthest_pair = nil
     point_array.each do |set|
       distance = getDistanceFromLatLonInKm(set[0], set[1], starting_point[0], starting_point[1])
-      p "This is the distance that is farthest so far", biggest_distance
-      p "This is the distance that is being compared", distance
       if distance > biggest_distance
-        p "Time to reset biggest distance!"
         biggest_distance = distance
         farthest_pair = set
       end
@@ -114,10 +103,8 @@ class Route < ActiveRecord::Base
     three_decimal_points(farthest_pair)
   end
 
-
 # Adjust the rounding to set the precision of the match
   def self.three_decimal_points(pair)
-    p "Here's the rounded pair: ", [pair[0].round(3), pair[1].round(3)]
     return [pair[0].round(3), pair[1].round(3)]
   end
 
