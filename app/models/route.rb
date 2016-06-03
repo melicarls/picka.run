@@ -36,9 +36,17 @@ class Route < ActiveRecord::Base
           route_farthest = farthest_point(route.map, route.start_location)
           # Find the point that is furthest from the activity's start
           activity_farthest = farthest_point(activity.map, activity.start_location)
-          # If they match, add the activity to the routes and vice versa. This is done in the reset avgs function
-          # Adjust the route to account for the way that the newly added activity should change its averages
-          if route_farthest == activity_farthest
+          # Check whether the farthest point longitude is within an acceptable range
+          longOk = (activity_farthest[0] <= route_farthest[0] + 0.01 ) && (activity_farthest[0] >= route_farthest[0] - 0.01)
+          latOk = (activity_farthest[1] <= route_farthest[1] + 0.01 ) && (activity_farthest[1] >= route_farthest[1] - 0.01)
+          # if the route's farthest point matches and the start and end location matches, pair them
+          if (longOk && latOk) &&
+            (activity.start_location[0] == route.start_location[0]) &&
+            (activity.start_location[1] == route.start_location[1]) &&
+            (activity.end_location[0] == activity.end_location[0]) &&
+            (activity.end_location[1] == activity.end_location[1])
+            # If they match, add the activity to the routes and vice versa. This is done in the reset avgs function
+            # Adjust the route to account for the way that the newly added activity should change its averages
             matched = true
             reset_route_avgs(activity, route)
           end
