@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  has_many :activities
-  has_many :routes
+  has_many :activities, dependent: :destroy
+  has_many :routes, dependent: :destroy
 
   validates :first_name,
             presence: true,
