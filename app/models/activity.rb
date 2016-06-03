@@ -1,11 +1,13 @@
 class Activity < ActiveRecord::Base
-
   belongs_to :user
   belongs_to :route
 
   def self.fetch_user_activities(user, params)
+    # fetch all of the current user's activities from strava
     @client = Strava::Api::V3::Client.new(:access_token => user.token)
     @activities = @client.list_athlete_activities(params)
+    # iterate through activities
+    # save all activities that are new, that are runs, and that have GPS data to the database
     @activities.each do |el|
       if !Activity.find_by(strava_id: el["id"]) && el["type"] == "Run" && el["map"]["summary_polyline"] != nil
         a = Activity.new
@@ -21,6 +23,7 @@ class Activity < ActiveRecord::Base
         a.elevation_gain=el["total_elevation_gain"]
         a.user_id=user.id
         if a.save
+          # establish a link between the new activity and a new or existing route
           Route.match_to_route(user, a)
         end
       end
@@ -30,6 +33,5 @@ class Activity < ActiveRecord::Base
   def self.meters_to_miles(distance)
     (distance * 0.000621371).round(2)
   end
-
 
 end

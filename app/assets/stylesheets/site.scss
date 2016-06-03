@@ -1,56 +1,22 @@
 // Place all the styles related to the Site controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-h1, h2, h3, h4, a {
+
+// ------------- Site-Wide --------------
+main {
+  min-height: 85vh;
+}
+
+h1, h2, h3, h4, a, input {
   font-family: 'Raleway', sans-serif;
 }
 
-.nav-wrapper {
-  margin: 0px 20px;
+a {
+  color: #FF5722
 }
 
-#hero {
-  min-height: 500px;
-  background-image: image-url("splash.jpeg");
-  background-size: cover;
-  background-repeat:no-repeat;
-  background-position: 10% 75%;
-  position: relative;
-}
-
-#hero .btn-large {
-  position: absolute;
-  right: 40px;
-  bottom: 20px;
-}
-
-.searchHelp {
-  display: inline;
-}
-
-#distance {
-  font-size: 58px;
-  width: 85px;
-  height: 60px;
-  display: inline;
-  text-align: center;
-}
-
-// remove scroll from number input
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type=number] {
-  -moz-appearance:textfield;
-}
-// end remove scroll
-
-.favorite-star {
-  margin-top: 30px;
-  margin-right: 10px;
+footer a {
+  color: white;
 }
 
 .angular-google-map-container {
@@ -61,8 +27,18 @@ input[type=number] {
   height: 400px;
 }
 
+.centered {
+  text-align:center;
+}
+
 .chip {
   margin-right: 10px;
+  background-color: #FF5722;
+  color: white;
+}
+
+.nav-wrapper {
+  margin: 0px 20px;
 }
 
 // remove logos from maps
@@ -78,25 +54,78 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
 }
 // end remove logo
 
-.index, .routeList {
-  min-height: 85vh;
+// ------------- About Page --------------
+#hero {
+  min-height: 500px;
+  background-image: image-url("splash.jpeg");
+  background-size: cover;
+  background-repeat:no-repeat;
+  background-position: 10% 75%;
+  position: relative;
 }
 
-#profPic {
-  width: 60%;
-  margin: auto;
-  padding-top: 30px;
+#hero .btn-large {
+  position: absolute;
+  right: 40px;
+  bottom: 20px;
 }
 
-.more-link {
-  margin-top: 8px;
-  margin-left: 10px;
+#about-box {
+  margin: 80px auto 80px auto;
+}
+
+#about-box p {
+  font-size: 20px;
+}
+
+#about-box i {
+  color: #FF5722
+}
+
+#actions {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+// ------------- Search Page --------------
+// remove scroll from number input
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance:textfield;
+}
+// end remove scroll
+
+.searchHelp {
+  display: inline;
+}
+
+#distance {
+  font-size: 58px;
+  width: 85px;
+  height: 60px;
+  display: inline;
+  text-align: center;
 }
 
 #searchBox {
   text-align: center;
   margin-top: 100px;
   margin-bottom: 20px;
+}
+
+// ------------- Route Details Page --------------
+.fa-pencil {
+  font-size: .5em;
+}
+
+.favorite-star {
+  margin-top: 30px;
+  margin-right: 10px;
 }
 
 #nameEdit {
@@ -109,35 +138,14 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
   padding-top: 20px;
 }
 
-.fa-pencil {
-  font-size: .5em;
+// ------------- User Profile Page --------------
+.more-link {
+  margin-top: 8px;
+  margin-left: 10px;
 }
 
-footer a {
-  color: white;
-}
-
-#about-box {
-  margin: 80px auto 80px auto;
-}
-
-#about-box p {
-  font-size: 20px;
-}
-
-a {
-  color: #FF5722
-}
-
-#about-box i {
-  color: #FF5722
-}
-
-#actions {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.centered {
-  text-align:center;
+#profPic {
+  width: 60%;
+  margin: auto;
+  padding-top: 30px;
 }

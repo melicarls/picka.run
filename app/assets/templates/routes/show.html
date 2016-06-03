@@ -40,22 +40,26 @@
 
   <div class="divider"></div>
 
-  <h4>Recent Efforts</h4>
-  <table>
-    <tr>
-      <th>Date</th>
-      <th>Elapsed Time</th>
-      <th>Average Pace</th>
-      <th>Activity Name</th>
-    </tr>
-    <tr ng-repeat="a in routesShowCtrl.activities | orderBy: '-date'">
-      <td>{{routesShowCtrl.formatDate(a.date)}}</td>
-      <td>{{routesShowCtrl.formatTime(a.time)}}</td>
-      <td>{{routesShowCtrl.formatPace(a.pace)}} min/mi</td>
-      <td><a href="https://www.strava.com/activities/{{a.strava_id}}" target="_blank">{{a.name}}</a></td>
-    </tr>
-  </table>
+  <div>
+    <h4>Recent Efforts</h4>
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Elapsed Time</th>
+        <th>Average Pace</th>
+        <th>Activity Name</th>
+      </tr>
+      <tr ng-repeat="a in routesShowCtrl.activities | orderBy: '-date'">
+        <td>{{routesShowCtrl.formatDate(a.date)}}</td>
+        <td>{{routesShowCtrl.formatTime(a.time)}}</td>
+        <td>{{routesShowCtrl.formatPace(a.pace)}} min/mi</td>
+        <td><a href="https://www.strava.com/activities/{{a.strava_id}}" target="_blank">{{a.name}}</a></td>
+      </tr>
+    </table>
+  </div>
+
   <br />
+  
   <a class="btn btn-primary" ng-href="/routes">Back</a>
 
 </div>

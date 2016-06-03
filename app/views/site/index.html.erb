@@ -6,20 +6,23 @@
         <a href="/routes" class="brand-logo">picka.run</a>
         <a href="#" class="button-collapse" data-activates="nav-mobile" data-sidenav="left" data-menuwidth="200" data-closeonclick="true"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-          <li><%= link_to "About", root_path, :class => 'btn waves-effect waves-light' %></li>
+            <li><%= link_to "About", root_path, :class => 'btn waves-effect waves-light nav-tab', :id => 'about' %></li>
           <% if !current_user %>
             <li><%= link_to "Let's Go!", '/auth/strava', method: 'get',  :class => "btn deep-orange waves-effect waves-light" %></li>
           <% else %>
-            <li><a href="/users/<%= current_user.id %>" class="btn waves-effect waves-light">Profile</a></li>
+            <li><%= link_to "Your Routes", '/routes', method: 'get', :class => "btn waves-effect waves-light nav-tab", :id => 'routes' %></li>
+            <li><%= link_to "Explore", '/explore', method: 'get', :class => "btn waves-effect waves-light nav-tab", :id => 'explore' %></li>
+            <li><a href="/users/<%= current_user.id %>" class="btn waves-effect waves-light nav-tab" id="profile">Profile</a></li>
             <li><%= link_to "Log Out", logout_path, method: 'get', :class => "btn waves-effect waves-light" %></li>
           <% end %>
         </ul>
         <ul class="side-nav" id="nav-mobile">
-          <li><%= link_to "About", root_path, :class => 'btn' %></li>
+            <li><%= link_to "About", root_path, :class => 'btn' %></li>
           <% if !current_user %>
             <li><%= link_to "Let's Go!", '/auth/strava', method: 'get', :class => 'btn' %></li>
           <% else %>
-          <li><%= link_to "Routes", '/routes', method: 'get', :class => 'btn'%></li>
+            <li><%= link_to "Your Routes", '/routes', method: 'get', :class => "btn waves-effect waves-light" %></li>
+            <li><%= link_to "Explore", '/explore', method: 'get', :class => "btn waves-effect waves-light" %></li>
             <li><a href="/users/<%= current_user.id %>" class="btn">Profile</a></li>
             <li><%= link_to "Log Out", logout_path, method: 'get', :class => 'btn' %></li>
           <% end %>

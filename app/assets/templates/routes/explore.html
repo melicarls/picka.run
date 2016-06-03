@@ -1,0 +1,33 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col s12">
+      <h3>Welcome to the routes explorer!</h3>
+      <p class="col s12 m8">
+        Click the button below to fetch a route run by another anonymous picka.run user.
+        It will only suggest routes starting near your current location.
+      </p>
+      <a class="btn-large pull-right col s12 m3 offset-m1 deep-orange" ng-click="routesExploreCtrl.refreshRandom(routesExploreCtrl.routes)">Get a Route</a>
+    </div>
+  </div>
+  
+  <br />
+
+  <div class="row">
+    <div class="col s12 mapWrap">
+      <ui-gmap-google-map center="routesExploreCtrl.start" zoom="13" options="routesExploreCtrl.options">
+        <ui-gmap-polyline path="routesExploreCtrl.path" stroke="routesExploreCtrl.stroke" visible='true'></ui-gmap-polyline>
+      </ui-gmap-google-map>
+    </div>
+    <div class="col s8" ng-show="routesExploreCtrl.show">
+      <h5>Distance: {{routesExploreCtrl.displayRoute.distance}} miles</h5>
+      <h5>Last run: {{routesExploreCtrl.formatDate(routesExploreCtrl.displayRoute.last_completed)}}</h5>
+      <h5>User's time: {{routesExploreCtrl.formatTime(routesExploreCtrl.displayRoute.avg_time)}}</h5>
+      <h5>User's pace: {{routesExploreCtrl.formatPace(routesExploreCtrl.displayRoute.avg_pace)}}</h5>
+    </div>
+    <div class="col s4" ng-show="routesExploreCtrl.show">
+      <h5>Tags:</h5><div class="chip" ng-repeat="tag in routesExploreCtrl.displayRoute.tags">{{tag}}</div>
+    </div>
+  </div>
+
+</div>
