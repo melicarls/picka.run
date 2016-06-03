@@ -1,18 +1,25 @@
-angular.module('pickarun').controller('RoutesIndexController', RoutesIndexController);
+angular
+  .module('pickarun')
+  .controller('RoutesIndexController', RoutesIndexController);
 
 RoutesIndexController.$inject = ['$http'];
 
 function RoutesIndexController($http) {
+  var vm = this;
+
+  // toggles navbar selector
   $('.nav-tab').removeClass('deep-orange');
   $('#routes').addClass('deep-orange');
-  console.log("Routes index controller is connected");
-  var vm = this;
+
+  // set default attributes for maps
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
   vm.stroke = {color: '#FF5722',weight: 2};
   vm.options = {
      styles: mapStyles
   };
+
+  // fetch all of the user's routes
   $http({
     method: 'GET',
     url: '/api/routes'
@@ -27,92 +34,79 @@ function RoutesIndexController($http) {
     console.log("There was an error: ", error);
   }
 
-    function addMapInfo(routeArr) {
-      routeArr.forEach(function(route) {
-        route.start = {latitude: route.start_location[0], longitude: route.start_location[1]};
-        route.path = formatPolyline(route.map);
-      });
+  // give each route a start point formatted for Google Maps
+  function addMapInfo(routeArr) {
+    routeArr.forEach(function(route) {
+      route.start = {latitude: route.start_location[0], longitude: route.start_location[1]};
+      route.path = formatPolyline(route.map);
+    });
+  }
+
+  // give each route a polyline formatted for Google Maps
+  function formatPolyline(arr) {
+    results_arr = [];
+    arr.forEach(function(el) {
+      results_arr.push({latitude: el[0], longitude: el[1]});
+      return el;
+    });
+    return results_arr;
+  }
+
+// render 3 routes matching the user's search at a time
+  var routesArray;
+  var count = 3;
+  vm.range = function(routes, targetDistance){
+    // reset the rendered count when input is erased
+    if (targetDistance === null) {
+      count = 3;
     }
-
-    function formatPolyline(arr) {
-      results_arr = [];
-      arr.forEach(function(el) {
-        results_arr.push({latitude: el[0], longitude: el[1]});
-        return el;
-      });
-      return results_arr;
+    routesArray = [];
+    angular.forEach(routes, function(route, key) {
+      // if a route is within 1/2 mile of the target distance, it's an option
+      if ((route.distance < targetDistance + 0.5) && (route.distance > targetDistance - 0.5)) {
+        routesArray.push(route);
+      }
+    });
+    // check if there are more routes that can be rendered. if not, hide the more button
+    if (routesArray.length < count) {
+      vm.moreAvailable = false;
     }
+    // return the necessary number of matching records
+    return routesArray.splice(0, count);
+  };
 
-    vm.searchFilter = function(itemDistance, targetDistance) {
-      return ((itemDistance < targetDistance + 0.5) && (itemDistance > targetDistance - 0.5));
-    };
+  // render 3 more routes on button click
+  vm.moreResults = function() {
+    count = count + 3;
+  };
 
-    var routesArray;
-    var count = 3;
+  vm.formatDate = function(date) {
+    var d = new Date(date);
+    var year = d.getFullYear();
+    var month = d.getMonth() + 1;
+    var day = d.getDate();
+    return (month + "/" + day + "/" + year);
+  };
 
-    vm.range = function(routes, targetDistance){
-      if (targetDistance === null) {
-        routesArray = [];
-        count = 3;
-      }
-      routesArray = [];
-      angular.forEach(routes, function(route, key) {
-        if ((route.distance < targetDistance + 0.5) && (route.distance > targetDistance - 0.5)) {
-          routesArray.push(route);
-        }
-      });
-      if (routesArray.length > count) {
-        vm.moreAvailable = true;
-      } else {
-        vm.moreAvailable = false;
-      }
-      return routesArray.splice(0, count);
-    };
+  vm.formatTime = function(time) {
+    var hours = parseInt(time / 3600) % 24;
+    var minutes = parseInt(time / 60) % 60;
+    var seconds = parseInt(time % 60);
+    return ((hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds));
+  };
 
-    vm.moreResults = function() {
-      count = count + 3;
-    };
+  vm.formatPace = function(pace) {
+    // convert to mi/hr
+    pace = pace * 2.2369;
+    // convert to min/mi
+    pace = 60/pace;
+    // format
+    var min = Math.floor(pace);
+    var sec = (pace - min) * 60;
+    sec = Math.floor(sec);
+    return(min+":"+(sec  < 10 ? "0" + sec : sec));
+  };
 
-    vm.formatDate = function(date) {
-      var d = new Date(date);
-      var year = d.getFullYear();
-      var month = d.getMonth() + 1;
-      var day = d.getDate();
-      return (month + "/" + day + "/" + year);
-    };
-
-    vm.formatTime = function(time) {
-      var hours = parseInt(time / 3600) % 24;
-      var minutes = parseInt(time / 60) % 60;
-      var seconds = parseInt(time % 60);
-      return ((hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds));
-    };
-
-    vm.formatPace = function(pace) {
-      // convert to mi/hr
-      pace = pace * 2.2369;
-      // convert to min/mi
-      pace = 60/pace;
-      // format
-      var min = Math.floor(pace);
-      var sec = (pace - min) * 60;
-      sec = Math.floor(sec);
-      return(min+":"+(sec  < 10 ? "0" + sec : sec));
-    };
-
-    vm.updateRoute = function(route) {
-      $http({
-        method: 'PATCH',
-        url: '/api/routes/' + route.id,
-        data: route
-      }).then(onRoutesUpdateSuccess, onRoutesUpdateError);
-      function onRoutesUpdateSuccess(response) {
-        console.log("Here's the response data: ", response.data);
-      }
-      function onRoutesUpdateError(error) {
-        console.log("There was an error: ", error);
-      }
-    };
 }
 
 var mapStyles=[

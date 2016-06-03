@@ -1,11 +1,17 @@
-angular.module('pickarun').controller('RoutesExploreController', RoutesExploreController);
+angular
+  .module('pickarun')
+  .controller('RoutesExploreController', RoutesExploreController);
 
 RoutesExploreController.$inject = ['$http'];
 
 function RoutesExploreController($http) {
+  var vm = this;
+
+  // toggles navbar selector
   $('.nav-tab').removeClass('deep-orange');
   $('#explore').addClass('deep-orange');
-  var vm = this;
+
+  // set default attributes for map and prevent render of info fields until a map is loaded
   vm.show = false;
   vm.start = {latitude: 37.8199, longitude: -122.4783};
   vm.path = [{latitude: 45,longitude: -74}];
@@ -14,24 +20,29 @@ function RoutesExploreController($http) {
      styles: mapStyles
   };
 
+  // get all routes belonging to other users (#TODO: not restful, needs refactor)
   $http({
     method: 'GET',
     url: '/api/routes/all'
   }).then(onRoutesExploreSuccess, onRoutesExploreError);
-
   function onRoutesExploreSuccess(response) {
     vm.options = [];
     vm.routes = response.data;
+    // get user's location
     navigator.geolocation.getCurrentPosition(function(position) {
+      // filter routes to find only those within ~1 mile of user's location
       vm.routes = vm.routes.filter(function(el) {
         return (el.start_location[0] == position.coords.latitude.toFixed(2)) && (el.start_location[1] == position.coords.longitude.toFixed(2));
       });
+      // randomly select a route to render
       vm.displayRoute = getRandomRoute(vm.routes);
+      // set map attributes according to selected route
       vm.start = {latitude:vm.displayRoute.start_location[0], longitude:vm.displayRoute.start_location[1]};
       vm.path = formatPolyline(vm.displayRoute.map);
     });
   }
 
+  // on button click, fetch a different random route near the user
   vm.refreshRandom = function(routes) {
     vm.show = true;
     vm.displayRoute = getRandomRoute(routes);
@@ -39,6 +50,7 @@ function RoutesExploreController($http) {
     vm.path = formatPolyline(vm.displayRoute.map);
   };
 
+  // randomly select a route from an array of routes
   function getRandomRoute(routesArr) {
     return routesArr[Math.floor(Math.random() * (routesArr.length - 1))];
   }
@@ -47,21 +59,15 @@ function RoutesExploreController($http) {
     console.log("There was an error: ", error);
   }
 
-    function addMapInfo(routeArr) {
-      routeArr.forEach(function(route) {
-        route.start = {latitude: route.start_location[0], longitude: route.start_location[1]};
-        route.path = formatPolyline(route.map);
-      });
-    }
-
-    function formatPolyline(arr) {
-      results_arr = [];
-      arr.forEach(function(el) {
-        results_arr.push({latitude: el[0], longitude: el[1]});
-        return el;
-      });
-      return results_arr;
-    }
+  // turn array of points into Google maps format
+  function formatPolyline(arr) {
+    results_arr = [];
+    arr.forEach(function(el) {
+      results_arr.push({latitude: el[0], longitude: el[1]});
+      return el;
+    });
+    return results_arr;
+  }
 
     vm.formatDate = function(date) {
       var d = new Date(date);
