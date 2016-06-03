@@ -1,3 +1,5 @@
+angular.module('pickarun').controller('HomeIndexController', HomeIndexController);
+
 HomeIndexController.$inject=['$http', '$window'];
 
 function HomeIndexController($http, $window) {

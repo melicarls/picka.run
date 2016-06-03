@@ -1,3 +1,5 @@
+angular.module('pickarun').controller('RoutesIndexController', RoutesIndexController);
+
 RoutesIndexController.$inject = ['$http'];
 
 function RoutesIndexController($http) {

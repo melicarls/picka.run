@@ -1,3 +1,5 @@
+angular.module('pickarun').controller('UsersShowController', UsersShowController); 
+
 UsersShowController.$inject = ['$http', '$routeParams'];
 
 function UsersShowController($http, $routeParams) {
