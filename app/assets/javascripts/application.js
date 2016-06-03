@@ -15,3 +15,10 @@
 //= require angular-rails-templates
 //= require_tree ../templates
 //= require_tree .
+//= require routes
+//= require app
+//= require controllers/HomeIndexController
+//= require controllers/RoutesExploreController
+//= require controllers/RoutesIndexController
+//= require controllers/RoutesShowController
+//= require controllers/UsersShowController
