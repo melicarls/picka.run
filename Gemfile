@@ -22,13 +22,16 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'angular-rails-templates'
-
+# api wrapper to get athlete activity data
 gem 'strava-api-v3'
 
+# 3rd party auth
 gem 'omniauth-strava'
 
+# decode and encode polylines
 gem 'polylines'
 
+# protect application secrets
 gem 'dotenv-rails'
 
 # Use ActiveModel has_secure_password
@@ -47,6 +50,9 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  # Testing suite
+  gem 'rspec-rails'
+
 end
 
 group :development do
