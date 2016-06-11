@@ -17,6 +17,10 @@ RSpec.describe Api::UsersController, type: :controller do
       expect(response.content_type).to eq("application/json")
     end
 
+    it 'returns the current user object' do
+      expect(response.data.first_name).to eq('Test')
+    end
+
   end
 
 end

@@ -52,7 +52,8 @@ group :development, :test do
   gem 'byebug'
   # Testing suite
   gem 'rspec-rails'
-
+  gem 'factory_girl'
+  gem 'shoulda'
 end
 
 group :development do
