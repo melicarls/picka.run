@@ -34,5 +34,5 @@ User Profile:
 + Different Splash image based on user location
 + Snap maps to polyline
 + More robust Explore feature
-..* Explore by distance
-..* Explore by tags
+.. * Explore by distance
+.. * Explore by tags
