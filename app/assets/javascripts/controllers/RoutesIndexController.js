@@ -16,6 +16,7 @@ function RoutesIndexController($http) {
   vm.path = [{latitude: 45,longitude: -74}];
   vm.stroke = {color: '#FF5722',weight: 2};
   vm.options = {
+    disableDefaultUI: true,
     draggable: false,
     styles: mapStyles
   };
