@@ -19,7 +19,7 @@ development:
   encoding: unicode
   database: pickarun_development
   pool: 5
-  username: melissacarlson
+  username:
   password:
   timeout: 5000
 
@@ -49,6 +49,6 @@ test:
   encoding: unicode
   database: pickarun_test
   pool: 5
-  username: melissacarlson
+  username: 
   password:
   timeout: 5000

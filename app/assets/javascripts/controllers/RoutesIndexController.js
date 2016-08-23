@@ -16,7 +16,8 @@ function RoutesIndexController($http) {
   vm.path = [{latitude: 45,longitude: -74}];
   vm.stroke = {color: '#FF5722',weight: 2};
   vm.options = {
-     styles: mapStyles
+    draggable: false,
+    styles: mapStyles
   };
 
   // fetch all of the user's routes
